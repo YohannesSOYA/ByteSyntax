@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parcel Tracking | CoopMart</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="background-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <div class="container">
+        <h1>CoopMart</h1>
+        <p class="subtitle">Track your parcel collection status instantly. Slebew</p>
+
+        <form id="searchForm" class="search-form">
+            <div class="input-group">
+                <label class="input-label">Last 4 Digits of Parcel ID</label>
+                <input type="text" id="trackingCode" placeholder="e.g. 1234" required>
+            </div>
+
+            <div class="input-group">
+                <label class="input-label">Recipient Name</label>
+                <input type="text" id="name" placeholder="Nama ko kasi masuk sini" required>
+            </div>
+
+            <div class="input-group">
+                <label class="input-label">Phone Number</label>
+                <input type="text" id="phone" placeholder="Oke kasi masuk nombor talipun ko sini ar" required>
+            </div>
+
+            <button type="submit">
+                <i class="fas fa-search"></i> Track Parcel
+            </button>
+        </form>
+
+        <div id="result" class="result-card">
+            <!-- Results will be injected here via JS -->
+        </div>
+
+        <div class="footer">
+            &copy; 2026 CoopMart Parcel System
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('searchForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const originalText = btn.innerHTML;
+
+            // Loading state
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Checking...';
+            btn.disabled = true;
+
+            // Simulate API call delay for effect (and later real connection)
+            setTimeout(() => {
+                // TODO: Connect to backend API
+                // For now, just show a demo result to prove the UI works
+                const resultDiv = document.getElementById('result');
+                resultDiv.style.display = 'block';
+                resultDiv.innerHTML = `
+                    <div class="status-badge status-pending">Pending Collection</div>
+                    <p><strong>Parcel ID:</strong> ...${document.getElementById('trackingCode').value}</p>
+                    <p>Please visit the counter to collect.</p>
+                `;
+
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }, 1000);
+        });
+    </script>
+</body>
+
+</html>
