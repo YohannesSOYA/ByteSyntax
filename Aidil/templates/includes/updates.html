@@ -1,0 +1,46 @@
+<!-- Daily Updates Section -->
+<div id="updates" class="about-section">
+    <div class="glass-card full-width">
+        <h2 class="section-title">Daily <span class="highlight">Updates</span></h2>
+        <p class="subtitle" style="text-align: center; color: var(--text-muted); margin-bottom: 2rem;">
+            New arrivals today. Check if your name is on the list.
+        </p>
+
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Time Arrived</th>
+                        <th>Status</th>
+                        <th>Name</th>
+                        <th>Tracking Code</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if parcels %}
+                    {% for parcel in parcels %}
+                    <tr>
+                        <td>{{ parcel.created_at.strftime('%H:%M %p') }}</td>
+                        <td>
+                            <span class="status-badge status-{{ parcel.status.lower() }}">
+                                {{ parcel.status }}
+                            </span>
+                        </td>
+                        <td style="font-weight: 600;">{{ parcel.recipient_name }}</td>
+                        <td style="color: var(--text-muted);">...{{ parcel.tracking_code[-4:] }}</td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td colspan="4" style="text-align: center; padding: 2rem;">
+                            <i class="fas fa-box-open"
+                                style="font-size: 2rem; color: var(--text-muted); margin-bottom: 1rem;"></i>
+                            <p>No parcels have arrived yet today.</p>
+                        </td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

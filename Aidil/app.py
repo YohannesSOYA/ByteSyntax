@@ -7,6 +7,7 @@ app.secret_key = 'supersecretkey'  # Needed for session management
 import re
 
 # ---------- DATABASE CONNECTION ----------
+# ---------- DATABASE CONNECTION ----------
 def get_connection():
     return mysql.connector.connect(
         host="localhost",
@@ -15,39 +16,35 @@ def get_connection():
         database="coopmart_parcels"
     )
 
-# ---------- USERS ROUTES ----------
-@app.route("/")
-def home():
+def get_daily_parcels():
+    """Helper to fetch parcels created today."""
     parcels = []
     try:
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
-        # Fetch parcels created today for the scrolling section
         cursor.execute("SELECT * FROM parcels WHERE DATE(created_at) = CURDATE() ORDER BY created_at DESC")
         parcels = cursor.fetchall()
         cursor.close()
         conn.close()
     except Exception as e:
         print(f"Error fetching daily updates: {e}")
+    return parcels
+
+# ---------- USERS ROUTES ----------
+@app.route("/")
+def home():
+    parcels = get_daily_parcels()
     return render_template('index.html', parcels=parcels)
 
 @app.route("/help")
 def help_page():
-    return render_template('help.html')
+    parcels = get_daily_parcels()
+    return render_template('help.html', parcels=parcels)
 
 @app.route("/daily-updates")
 def daily_updates():
-    try:
-        conn = get_connection()
-        cursor = conn.cursor(dictionary=True)
-        # Fetch parcels created today (using MySQL CURDATE function)
-        cursor.execute("SELECT * FROM parcels WHERE DATE(created_at) = CURDATE() ORDER BY created_at DESC")
-        parcels = cursor.fetchall()
-        cursor.close()
-        conn.close()
-        return render_template('daily_updates.html', parcels=parcels)
-    except Exception as e:
-        return f"Error: {e}"
+    parcels = get_daily_parcels()
+    return render_template('daily_updates.html', parcels=parcels)
 
 @app.route("/api/search", methods=["POST"])
 def search_parcel():
@@ -103,7 +100,7 @@ def login():
         password = request.form.get("password")
         
         if not username or not password:
-             return render_template("login.html", error="Please enter both username and password")
+             return render_template("login.html", error="Please enter both username and password", parcels=get_daily_parcels())
 
         try:
             conn = get_connection()
@@ -120,12 +117,12 @@ def login():
                 session["logged_in"] = True
                 return redirect(url_for('admin_dashboard'))
             else:
-                return render_template("login.html", error="Invalid credentials")
+                return render_template("login.html", error="Invalid credentials", parcels=get_daily_parcels())
                 
         except Exception as e:
-            return render_template("login.html", error=f"Database error: {str(e)}")
+            return render_template("login.html", error=f"Database error: {str(e)}", parcels=get_daily_parcels())
             
-    return render_template("login.html")
+    return render_template("login.html", parcels=get_daily_parcels())
 
 @app.route("/logout")
 def logout():
@@ -209,10 +206,12 @@ def update_status():
 # ---------- SERVICE & FORUM ROUTES ----------
 @app.route("/service")
 def service_page():
-    return render_template('service.html')
+    parcels = get_daily_parcels()
+    return render_template('service.html', parcels=parcels)
 
 @app.route("/forum")
 def forum_page():
+    parcels = get_daily_parcels()
     try:
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
@@ -221,7 +220,7 @@ def forum_page():
         messages = cursor.fetchall()
         cursor.close()
         conn.close()
-        return render_template('forum.html', messages=messages)
+        return render_template('forum.html', messages=messages, parcels=parcels)
     except Exception as e:
         return f"Error loading forum: {e}"
 

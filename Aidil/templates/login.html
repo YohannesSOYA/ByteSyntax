@@ -16,8 +16,9 @@
         <div class="brand">COOPMART</div>
         <div class="nav-links">
             <a href="/" class="nav-link">Home</a>
-            <a href="/daily-updates" class="nav-link">Updates</a>
-            <a href="/help" class="nav-link">Help</a>
+            <a href="#about" class="nav-link">About Us</a>
+            <a href="#updates" class="nav-link">Updates</a>
+            <a href="#help" class="nav-link">Help</a>
         </div>
         <a href="/login" class="btn-nav btn-login" style="background: rgba(255,255,255,0.2);">Admin</a>
     </nav>
@@ -52,6 +53,12 @@
             </div>
         </form>
     </div>
+    </div>
+
+    <!-- Shared Sections -->
+    {% include 'includes/about.html' %}
+    {% include 'includes/updates.html' %}
+    {% include 'includes/help.html' %}
 </body>
 
 </html>
