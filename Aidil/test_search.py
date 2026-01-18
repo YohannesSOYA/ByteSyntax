@@ -1,4 +1,4 @@
-from Aidil.app import app
+from app import app
 import json
 
 def test_search():
