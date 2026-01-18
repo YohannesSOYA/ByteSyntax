@@ -58,18 +58,18 @@
 
             <form id="searchForm">
                 <div class="input-wrapper">
-                    <label>Recipient Name</label>
-                    <input type="text" id="name" placeholder="" required>
+                    <label>Recipient Name (Optional)</label>
+                    <input type="text" id="name" placeholder="">
                 </div>
 
                 <div class="input-wrapper">
-                    <label>Phone Number</label>
-                    <input type="text" id="phone" placeholder="" required>
+                    <label>Phone Number (Required for List)</label>
+                    <input type="text" id="phone" placeholder="e.g. 0123456789">
                 </div>
 
                 <div class="input-wrapper">
                     <label>Tracking Code (Last 4 Digits)</label>
-                    <input type="text" id="trackingCode" placeholder="" required>
+                    <input type="text" id="trackingCode" placeholder="Optional if Phone is entered">
                 </div>
 
                 <button type="submit" class="btn-primary">
@@ -92,18 +92,27 @@
             const originalText = btn.innerHTML;
             const resultDiv = document.getElementById('result');
 
+            const trackingCode = document.getElementById('trackingCode').value.trim();
+            const phoneNumber = document.getElementById('phone').value.trim();
+
+            if (!trackingCode && !phoneNumber) {
+                alert("Please enter either a Phone Number or Tracking Code.");
+                return;
+            }
+
             // Loading state
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Checking...';
             btn.disabled = true;
             resultDiv.style.display = 'none';
 
-            const trackingCode = document.getElementById('trackingCode').value;
-
             try {
                 const response = await fetch('/api/search', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ tracking_code: trackingCode })
+                    body: JSON.stringify({
+                        tracking_code: trackingCode,
+                        phone_number: phoneNumber
+                    })
                 });
 
                 const data = await response.json();
@@ -111,6 +120,11 @@
                 if (response.ok && data.found) {
                     // Show valid results
                     let htmlData = '';
+                    // Highlight if multiple
+                    if (data.data.length > 1) {
+                        htmlData += `<p style="margin-bottom:1rem; color:#00f0ff;">Found ${data.data.length} parcels:</p>`;
+                    }
+
                     data.data.forEach(parcel => {
                         const statusClass = parcel.status.toLowerCase() === 'pending' ? 'status-pending' : 'status-collected';
                         htmlData += `
@@ -118,6 +132,7 @@
                                 <div class="status-badge ${statusClass}">${parcel.status}</div>
                                 <p style="margin: 0.5rem 0; font-size: 1.1rem; font-weight: 600;">${parcel.recipient_name}</p>
                                 <p style="margin: 0; color: var(--text-muted); font-size: 0.9rem;">Code: ...${parcel.tracking_code.slice(-4)}</p>
+                                <p style="margin: 0; color: var(--text-muted); font-size: 0.8rem;">Date: ${parcel.created_at || 'Recently'}</p>
                             </div>
                         `;
                     });
@@ -127,7 +142,7 @@
                     // Not found
                     resultDiv.innerHTML = `
                         <div style="color: #ff0055; font-weight: 600; text-align: center;">
-                            <i class="fas fa-exclamation-circle"></i> ${data.message || 'Parcel not found.'}
+                            <i class="fas fa-exclamation-circle"></i> ${data.message || 'No parcels found.'}
                         </div>
                     `;
                     resultDiv.style.display = 'block';

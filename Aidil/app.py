@@ -4,6 +4,8 @@ import mysql.connector
 app = Flask(__name__)
 app.secret_key = 'supersecretkey'  # Needed for session management
 
+import re
+
 # ---------- DATABASE CONNECTION ----------
 def get_connection():
     return mysql.connector.connect(
@@ -40,32 +42,43 @@ def daily_updates():
 def search_parcel():
     data = request.json
     tracking_code = data.get("tracking_code")
-    # Optional: We can valid against name/phone if stricter security is needed
-    # for now, we search by the simplified tracking code (last 4 digits)
+    phone_number = data.get("phone_number")
 
-    if not tracking_code:
-        return jsonify({"error": "Tracking code is required"}), 400
+    if not tracking_code and not phone_number:
+        return jsonify({"error": "Tracking code or Phone number is required"}), 400
 
     try:
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
 
-        # Assuming tracking_code in DB stores the full code, providing a partial search might be better for "last 4 digits"
-        # Or if the user stores only 4 digits, exact match is fine.
-        # Let's do a LIKE query to be flexible: ends with these 4 digits
-        sql = "SELECT * FROM parcels WHERE tracking_code LIKE %s"
-        cursor.execute(sql, (f"%{tracking_code}",))
-        results = cursor.fetchall()
+        if tracking_code:
+            # Search by specific tracking code (Last 4 digits or Full)
+            sql = "SELECT * FROM parcels WHERE tracking_code LIKE %s"
+            cursor.execute(sql, (f"%{tracking_code}",))
+        elif phone_number:
+            # CLEAN INPUT: Remove ALL non-digits (keep only 0-9)
+            clean_phone = re.sub(r'\D', '', phone_number)
+            print(f"DEBUG: Searching for phone '{clean_phone}' (Original: '{phone_number}')")
+            
+            # Search by Phone Number (List all for user)
+            # Match against DB (also stripped of non-digits, though DB should be clean)
+            # We use LIKE %clean_phone% to allow partial matches like last 4 digits of phone
+            sql = "SELECT * FROM parcels WHERE phone_number LIKE %s ORDER BY created_at DESC"
+            cursor.execute(sql, (f"%{clean_phone}%",))
 
+        results = cursor.fetchall()
+        print(f"DEBUG: Found {len(results)} results")
+        
         cursor.close()
         conn.close()
 
         if results:
              return jsonify({"found": True, "data": results})
         else:
-             return jsonify({"found": False, "message": "No parcel found with those details."})
+             return jsonify({"found": False, "message": "No parcels found."})
 
     except Exception as e:
+        print(f"DEBUG: Error - {e}")
         return jsonify({"error": str(e)}), 500
 
 # ---------- ADMIN ROUTES ----------
