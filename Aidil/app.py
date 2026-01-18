@@ -1,7 +1,8 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, session, redirect, url_for
 import mysql.connector
 
 app = Flask(__name__)
+app.secret_key = 'supersecretkey'  # Needed for session management
 
 # ---------- DATABASE CONNECTION ----------
 def get_connection():
@@ -12,16 +13,123 @@ def get_connection():
         database="coopmart_parcels"
     )
 
-# ---------- TEST ROUTE ----------
+# ---------- USERS ROUTES ----------
 @app.route("/")
 def home():
     return render_template('index.html')
 
-# ---------- ADD PARCEL (ADMIN API) ----------
+@app.route("/help")
+def help_page():
+    return render_template('help.html')
+
+@app.route("/daily-updates")
+def daily_updates():
+    try:
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+        # Fetch parcels created today (using MySQL CURDATE function)
+        cursor.execute("SELECT * FROM parcels WHERE DATE(created_at) = CURDATE() ORDER BY created_at DESC")
+        parcels = cursor.fetchall()
+        cursor.close()
+        conn.close()
+        return render_template('daily_updates.html', parcels=parcels)
+    except Exception as e:
+        return f"Error: {e}"
+
+@app.route("/api/search", methods=["POST"])
+def search_parcel():
+    data = request.json
+    tracking_code = data.get("tracking_code")
+    # Optional: We can valid against name/phone if stricter security is needed
+    # for now, we search by the simplified tracking code (last 4 digits)
+
+    if not tracking_code:
+        return jsonify({"error": "Tracking code is required"}), 400
+
+    try:
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        # Assuming tracking_code in DB stores the full code, providing a partial search might be better for "last 4 digits"
+        # Or if the user stores only 4 digits, exact match is fine.
+        # Let's do a LIKE query to be flexible: ends with these 4 digits
+        sql = "SELECT * FROM parcels WHERE tracking_code LIKE %s"
+        cursor.execute(sql, (f"%{tracking_code}",))
+        results = cursor.fetchall()
+
+        cursor.close()
+        conn.close()
+
+        if results:
+             return jsonify({"found": True, "data": results})
+        else:
+             return jsonify({"found": False, "message": "No parcel found with those details."})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+# ---------- ADMIN ROUTES ----------
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if session.get("logged_in"):
+        return redirect(url_for('admin_dashboard'))
+
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+        
+        if not username or not password:
+             return render_template("login.html", error="Please enter both username and password")
+
+        try:
+            conn = get_connection()
+            cursor = conn.cursor(dictionary=True)
+            # Check for admin user in DB
+            # Note: For production, passwords should be HASHED. This assumes plain text for now as per user context.
+            cursor.execute("SELECT * FROM admins WHERE username = %s AND password = %s", (username, password))
+            admin = cursor.fetchone()
+            
+            cursor.close()
+            conn.close()
+
+            if admin:
+                session["logged_in"] = True
+                return redirect(url_for('admin_dashboard'))
+            else:
+                return render_template("login.html", error="Invalid credentials")
+                
+        except Exception as e:
+            return render_template("login.html", error=f"Database error: {str(e)}")
+            
+    return render_template("login.html")
+
+@app.route("/logout")
+def logout():
+    session.pop("logged_in", None)
+    return redirect(url_for('login'))
+
+@app.route("/admin")
+def admin_dashboard():
+    if not session.get("logged_in"):
+        return redirect(url_for('login'))
+        
+    try:
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM parcels ORDER BY created_at DESC LIMIT 50")
+        parcels = cursor.fetchall()
+        cursor.close()
+        conn.close()
+        return render_template("admin.html", parcels=parcels)
+    except Exception as e:
+        return f"Database Error: {e}"
+
 @app.route("/api/add", methods=["POST"])
 def add_parcel():
-    data = request.json
+    if not session.get("logged_in"):
+         return jsonify({"error": "Unauthorized"}), 401
 
+    data = request.json
     tracking_code = data.get("tracking_code")
     recipient_name = data.get("recipient_name")
     phone_number = data.get("phone_number")
@@ -49,5 +157,25 @@ def add_parcel():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+@app.route("/api/update_status", methods=["POST"])
+def update_status():
+    if not session.get("logged_in"):
+         return jsonify({"error": "Unauthorized"}), 401
+         
+    data = request.json
+    parcel_id = data.get("id")
+    new_status = data.get("status")
+    
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("UPDATE parcels SET status = %s WHERE id = %s", (new_status, parcel_id))
+        conn.commit()
+        cursor.close()
+        conn.close()
+        return jsonify({"message": "Status updated"})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000)
