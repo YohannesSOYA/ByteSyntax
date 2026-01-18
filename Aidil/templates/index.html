@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parcel Tracking | CoopMart</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="brand">COOPMART</div>
+        <div class="nav-links">
+            <a href="/" class="nav-link" style="color:#fff;">Home</a>
+            <a href="/service" class="nav-link">Service</a>
+            <a href="/forum" class="nav-link">Forum</a>
+            <a href="#about" class="nav-link">About Us</a>
+            <a href="#updates" class="nav-link">Updates</a>
+            <a href="#help" class="nav-link">Help</a>
+        </div>
+        <a href="/login" class="btn-nav btn-login">Admin</a>
+    </nav>
+
+    <!-- Main Layout -->
+    <div class="floating-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <div class="main-layout">
+
+        <!-- Left: Hero Text -->
+        <div class="hero-content">
+            <h1 class="hero-title">
+                Track Your <br>
+                <span class="highlight">Collection Instantly.</span>
+            </h1>
+            <p class="hero-desc">
+                The world's fastest digital parcel management system for CoopMart.
+                Secure, real-time, and effortless tracking for everyone.
+            </p>
+
+            <div class="stats-row">
+                <div class="stat-item">
+                    <h3>24/7</h3>
+                    <p>Digital Access</p>
+                </div>
+                <div class="stat-item">
+                    <h3>100%</h3>
+                    <p>Secure</p>
+                </div>
+                <div class="stat-item">
+                    <h3>Fast</h3>
+                    <p>Collection</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right: Search Card -->
+        <div class="search-container">
+            <div class="card-title">Check Status</div>
+
+            <form id="searchForm">
+                <div class="input-wrapper">
+                    <label>Recipient Name (Optional)</label>
+                    <input type="text" id="name" placeholder="">
+                </div>
+
+                <div class="input-wrapper">
+                    <label>Phone Number (Required for List)</label>
+                    <input type="text" id="phone" placeholder="e.g. 0123456789">
+                </div>
+
+                <div class="input-wrapper">
+                    <label>Tracking Code (Last 4 Digits)</label>
+                    <input type="text" id="trackingCode" placeholder="Optional if Phone is entered">
+                </div>
+
+                <button type="submit" class="btn-primary">
+                    <i class="fas fa-search"></i> Track Parcel
+                </button>
+            </form>
+
+            <div id="result">
+                <!-- JS Injects Result Here -->
+            </div>
+        </div>
+
+    </div>
+
+    <!-- About Section -->
+    <div id="about" class="about-section">
+        <div class="glass-card full-width">
+            <h2 class="section-title">About <span class="highlight">CoopMart</span></h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>
+                        CoopMart Parcel Tracking is a state-of-the-art digital solution designed to streamline the
+                        logistics of parcel collection.
+                        We understand the frustration of manual logs and lost packages. Our system ensures every item is
+                        tracked from arrival to collection.
+                    </p>
+                    <p>
+                        Our mission is to provide <strong>transparency, speed, and security</strong> for all our
+                        community members.
+                        With real-time database updates and an easy-to-use search interface, you never have to guess
+                        where your parcel is again.
+                    </p>
+                </div>
+                <!-- Optional visual or icon -->
+                <div class="about-visual">
+                    <i class="fas fa-shipping-fast floating-icon"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Daily Updates Section -->
+    <div id="updates" class="about-section">
+        <div class="glass-card full-width">
+            <h2 class="section-title">Daily <span class="highlight">Updates</span></h2>
+            <p class="subtitle" style="text-align: center; color: var(--text-muted); margin-bottom: 2rem;">
+                New arrivals today. Check if your name is on the list.
+            </p>
+
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Time Arrived</th>
+                            <th>Status</th>
+                            <th>Name</th>
+                            <th>Tracking Code</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if parcels %}
+                        {% for parcel in parcels %}
+                        <tr>
+                            <td>{{ parcel.created_at.strftime('%H:%M %p') }}</td>
+                            <td>
+                                <span class="status-badge status-{{ parcel.status.lower() }}">
+                                    {{ parcel.status }}
+                                </span>
+                            </td>
+                            <td style="font-weight: 600;">{{ parcel.recipient_name }}</td>
+                            <td style="color: var(--text-muted);">...{{ parcel.tracking_code[-4:] }}</td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        <tr>
+                            <td colspan="4" style="text-align: center; padding: 2rem;">
+                                <i class="fas fa-box-open"
+                                    style="font-size: 2rem; color: var(--text-muted); margin-bottom: 1rem;"></i>
+                                <p>No parcels have arrived yet today.</p>
+                            </td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Help Section -->
+    <div id="help" class="about-section">
+        <div class="glass-card full-width" style="max-width: 800px;">
+            <h2 class="section-title">Help <span class="highlight">Center</span></h2>
+
+            <div style="margin-bottom: 2rem;">
+                <h3>How do I track my parcel?</h3>
+                <p style="color: var(--text-muted); line-height: 1.6;">
+                    Enter the last 4 digits of your tracking code, your name, and phone number in the search box on the
+                    home
+                    page. Our system checks the database instantly.
+                </p>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <h3>What do the statuses mean?</h3>
+                <ul style="color: var(--text-muted); line-height: 1.6; list-style: none; padding: 0;">
+                    <li style="margin-bottom: 10px;">
+                        <span class="status-badge status-pending">Pending</span>
+                        Your parcel has arrived at the collection center but hasn't been picked up yet.
+                    </li>
+                    <li>
+                        <span class="status-badge status-collected">Collected</span>
+                        You have already picked up this parcel.
+                    </li>
+                </ul>
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <h3>Collection Hours</h3>
+                <p style="color: var(--text-muted);">
+                    Monday - Friday: 8:00 AM - 12:00 PM , 1:00 PM- 6:00 PM<br>
+                    Weekend: 9:00 AM - 1:00 PM
+                </p>
+            </div>
+
+            <div
+                style="text-align: center; margin-top: 3rem; border-top: 1px solid var(--glass-border); padding-top: 2rem;">
+                <p style="color: var(--text-muted);">Still have questions?</p>
+                <a href="mailto:support@coopmart.com" style="color: #00f0ff; text-decoration: none;">Contact Support</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for Logic and 3D Effects -->
+    <script>
+        // --- 3D Tilt Effect ---
+        const card = document.querySelector('.search-container');
+        const container = document.querySelector('.main-layout');
+
+        // Only enable tilt on non-mobile for performance/UX
+        if (window.matchMedia("(min-width: 900px)").matches) {
+            document.addEventListener('mousemove', (e) => {
+                if (!card) return;
+
+                const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+                const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+
+                // Restrain rotation to avoid extreme flips
+                const clampX = Math.max(-10, Math.min(10, xAxis));
+                const clampY = Math.max(-10, Math.min(10, yAxis));
+
+                card.style.transform = `rotateY(${clampX}deg) rotateX(${clampY}deg)`;
+            });
+
+            // Reset when mouse leaves window (optional, usually just centering or leaving it is fine)
+            document.addEventListener('mouseleave', () => {
+                card.style.transform = 'rotateY(0deg) rotateX(0deg)';
+                card.style.transition = 'all 0.5s ease';
+            });
+
+            document.addEventListener('mouseenter', () => {
+                card.style.transition = 'none';
+            });
+        }
+
+        // --- Search Logic ---
+        document.getElementById('searchForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const originalText = btn.innerHTML;
+            const resultDiv = document.getElementById('result');
+
+            // Add slight pop to button
+            btn.style.transform = "scale(0.95)";
+            setTimeout(() => btn.style.transform = "scale(1)", 150);
+
+            const trackingCode = document.getElementById('trackingCode').value.trim();
+            const phoneNumber = document.getElementById('phone').value.trim();
+
+            if (!trackingCode && !phoneNumber) {
+                alert("Please enter either a Phone Number or Tracking Code.");
+                return;
+            }
+
+            // Loading state
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Checking...';
+            btn.disabled = true;
+            resultDiv.style.display = 'none';
+
+            try {
+                const response = await fetch('/api/search', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        tracking_code: trackingCode,
+                        phone_number: phoneNumber
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.found) {
+                    // Show valid results
+                    let htmlData = '';
+                    // Highlight if multiple
+                    if (data.data.length > 1) {
+                        htmlData += `<p style="margin-bottom:1rem; color:#00f0ff;">Found ${data.data.length} parcels:</p>`;
+                    }
+
+                    data.data.forEach((parcel, index) => {
+                        const statusClass = parcel.status.toLowerCase() === 'pending' ? 'status-pending' : 'status-collected';
+                        // Staggered animation for results
+                        const delay = index * 100;
+                        htmlData += `
+                            <div style="border-bottom:1px solid var(--glass-border); padding-bottom: 1rem; margin-bottom: 1rem; animation: slideInRight 0.5s ease forwards ${delay}ms; opacity: 0; transform: translateX(20px);">
+                                <div class="status-badge ${statusClass}">${parcel.status}</div>
+                                <p style="margin: 0.5rem 0; font-size: 1.1rem; font-weight: 600;">${parcel.recipient_name}</p>
+                                <p style="margin: 0; color: var(--text-muted); font-size: 0.9rem;">Code: ...${parcel.tracking_code.slice(-4)}</p>
+                                <p style="margin: 0; color: var(--text-muted); font-size: 0.8rem;">Date: ${parcel.created_at || 'Recently'}</p>
+                            </div>
+                        `;
+                    });
+                    resultDiv.innerHTML = htmlData;
+                    resultDiv.style.display = 'block';
+                } else {
+                    // Not found
+                    resultDiv.innerHTML = `
+                        <div style="color: #ff0055; font-weight: 600; text-align: center; animation: fadeIn 0.5s;">
+                            <i class="fas fa-exclamation-circle"></i> ${data.message || 'No parcels found.'}
+                        </div>
+                    `;
+                    resultDiv.style.display = 'block';
+                }
+
+            } catch (error) {
+                console.error("Error:", error);
+                resultDiv.innerHTML = `
+                        <div style="color: #ff0055; font-weight: 600; text-align: center;">
+                            <i class="fas fa-exclamation-triangle"></i> Network Error.
+                        </div>
+                    `;
+                resultDiv.style.display = 'block';
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        });
+    </script>
+</body>
+
+</html>

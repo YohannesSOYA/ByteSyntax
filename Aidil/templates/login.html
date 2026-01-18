@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | CoopMart</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="brand">COOPMART</div>
+        <div class="nav-links">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/daily-updates" class="nav-link">Updates</a>
+            <a href="/help" class="nav-link">Help</a>
+        </div>
+        <a href="/login" class="btn-nav btn-login" style="background: rgba(255,255,255,0.2);">Admin</a>
+    </nav>
+
+    <div class="container login-container" style="margin-top: 150px;">
+        <h1 style="margin-bottom: 0.5rem;">Access Portal</h1>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;">Admin Dashboard Login</p>
+
+        {% if error %}
+        <div class="alert alert-error">
+            {{ error }}
+        </div>
+        {% endif %}
+
+        <form method="POST" action="/login">
+            <div class="input-wrapper">
+                <label>Username</label>
+                <input type="text" name="username" required>
+            </div>
+
+            <div class="input-wrapper">
+                <label>Password</label>
+                <input type="password" name="password" required>
+            </div>
+
+            <button type="submit" class="btn-primary">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </button>
+            <div style="text-align: center; margin-top: 1.5rem;">
+                <a href="/" style="color: var(--text-muted); text-decoration: none; font-size: 0.9rem;">&larr; Back to
+                    Home</a>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forum | CoopMart</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="brand">COOPMART</div>
+        <div class="nav-links">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/service" class="nav-link">Service</a>
+            <a href="/forum" class="nav-link active">Forum</a>
+            <a href="/#about" class="nav-link">About Us</a>
+            <a href="/#updates" class="nav-link">Updates</a>
+            <a href="/#help" class="nav-link">Help</a>
+        </div>
+        <a href="/login" class="btn-nav btn-login">Admin</a>
+    </nav>
+
+    <!-- Background Shapes -->
+    <div class="floating-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <!-- Main Layout -->
+    <div class="main-layout" style="display: block; padding-top: 100px; max-width: 900px; margin: 0 auto;">
+
+        <h2 class="section-title" style="text-align: center; margin-bottom: 2rem;">Community <span
+                class="highlight">Forum</span></h2>
+
+        {% if messages %}
+        {% for msg in messages %}
+        <div class="glass-card full-width" style="margin-bottom: 2rem; animation: slideInUp 0.5s ease forwards;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                <div>
+                    <h3 style="margin: 0; color: var(--text-light);">{{ msg.sender_name }}</h3>
+                    <span style="font-size: 0.8rem; color: var(--text-muted);">{{ msg.created_at }}</span>
+                </div>
+                <span class="status-badge {{ 'status-collected' if msg.status == 'Replied' else 'status-pending' }}">
+                    {{ msg.status }}
+                </span>
+            </div>
+
+            <p
+                style="background: rgba(255, 255, 255, 0.05); padding: 1rem; border-radius: 8px; color: var(--text-light); border-left: 3px solid var(--primary-color);">
+                {{ msg.message }}
+            </p>
+
+            {% if msg.reply %}
+            <div style="margin-top: 1.5rem; padding-left: 1rem; border-left: 1px solid var(--glass-border);">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                    <i class="fas fa-user-shield" style="color: #00f0ff;"></i>
+                    <span style="color: #00f0ff; font-weight: 600;">Admin Reply</span>
+                </div>
+                <p style="color: var(--text-muted);">{{ msg.reply }}</p>
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="glass-card" style="text-align: center; padding: 3rem;">
+            <i class="fas fa-comments" style="font-size: 3rem; color: var(--text-muted); margin-bottom: 1rem;"></i>
+            <p>No messages yet. Be the first to ask in the <a href="/service" style="color: #00f0ff;">Service</a> page!
+            </p>
+        </div>
+        {% endif %}
+
+    </div>
+
+</body>
+
+</html>

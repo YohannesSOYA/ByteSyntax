@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service | CoopMart</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="brand">COOPMART</div>
+        <div class="nav-links">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/service" class="nav-link active">Service</a>
+            <a href="/forum" class="nav-link">Forum</a>
+            <a href="/#about" class="nav-link">About Us</a>
+            <a href="/#updates" class="nav-link">Updates</a>
+            <a href="/#help" class="nav-link">Help</a>
+        </div>
+        <a href="/login" class="btn-nav btn-login">Admin</a>
+    </nav>
+
+    <!-- Background Shapes -->
+    <div class="floating-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <!-- Main Layout -->
+    <div class="main-layout" style="justify-content: center; padding-top: 100px;">
+
+        <div class="glass-card" style="width: 100%; max-width: 600px; padding: 2rem;">
+            <h2 class="section-title">Contact <span class="highlight">Service</span></h2>
+            <p style="text-align: center; color: var(--text-muted); margin-bottom: 2rem;">
+                Have a question or issue? Send us a message.
+            </p>
+
+            <form id="serviceForm">
+                <div class="input-wrapper">
+                    <label>Your Name</label>
+                    <input type="text" id="name" placeholder="Enter your name" required>
+                </div>
+
+                <div class="input-wrapper">
+                    <label>Message</label>
+                    <textarea id="message" rows="5" placeholder="Type your message here..."
+                        style="width: 100%; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--glass-border); border-radius: 12px; color: var(--text-light); padding: 1rem; font-family: inherit; resize: vertical;"
+                        required></textarea>
+                </div>
+
+                <button type="submit" class="btn-primary" style="width: 100%; margin-top: 1rem;">
+                    <i class="fas fa-paper-plane"></i> Send Message
+                </button>
+            </form>
+
+            <div id="serviceResult" style="margin-top: 1rem; display: none;"></div>
+        </div>
+
+    </div>
+
+    <script>
+        document.getElementById('serviceForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const originalText = btn.innerHTML;
+            const resultDiv = document.getElementById('serviceResult');
+
+            const name = document.getElementById('name').value.trim();
+            const message = document.getElementById('message').value.trim();
+
+            if (!name || !message) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            btn.disabled = true;
+
+            try {
+                const response = await fetch('/api/send_message', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, message })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    resultDiv.innerHTML = `
+                        <div style="color: #00ff88; font-weight: 600; text-align: center; padding: 1rem; background: rgba(0, 255, 136, 0.1); border-radius: 8px;">
+                            <i class="fas fa-check-circle"></i> Message sent successfully!
+                        </div>
+                    `;
+                    document.getElementById('serviceForm').reset();
+                } else {
+                    throw new Error(data.error || 'Failed to send message');
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                resultDiv.innerHTML = `
+                    <div style="color: #ff0055; font-weight: 600; text-align: center; padding: 1rem; background: rgba(255, 0, 85, 0.1); border-radius: 8px;">
+                        <i class="fas fa-exclamation-triangle"></i> ${error.message}
+                    </div>
+                `;
+            } finally {
+                resultDiv.style.display = 'block';
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        });
+    </script>
+</body>
+
+</html>

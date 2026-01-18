@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | CoopMart</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 1rem;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .tab-btn:hover {
+            color: #fff;
+        }
+
+        .tab-btn.active {
+            color: #00f0ff;
+            font-weight: 600;
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -17px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: #00f0ff;
+            box-shadow: 0 0 10px #00f0ff;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <div class="container admin-container">
+        <div class="admin-header">
+            <h1>Dashboard</h1>
+            <div>
+                <a href="/" class="btn-logout" style="margin-right: 1rem;"><i class="fas fa-external-link-alt"></i> View
+                    Site</a>
+                <a href="/logout" class="btn-logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+
+        <!-- Tabs Navigation -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('add', this)"><i class="fas fa-plus-circle"></i> Add
+                Parcel</button>
+            <button class="tab-btn" onclick="switchTab('parcels', this)"><i class="fas fa-list"></i> Recent
+                Parcels</button>
+            <button class="tab-btn" onclick="switchTab('messages', this)"><i class="fas fa-envelope"></i> User
+                Messages</button>
+        </div>
+
+        <!-- Add Parcel Section -->
+        <div id="tab-add" class="tab-content active">
+            <div class="card">
+                <h3>Add New Parcel</h3>
+                <form id="addParcelForm" class="grid-form">
+                    <div class="input-group">
+                        <label class="input-label">Tracking Code</label>
+                        <input type="text" id="newTracking" placeholder="Scan or type code" required>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Recipient Name</label>
+                        <input type="text" id="newName" placeholder="Full Name" required>
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Phone</label>
+                        <input type="text" id="newPhone" placeholder="01x-xxxxxxx" required>
+                    </div>
+                    <button type="submit" class="btn-add">Add Parcel</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Parcel List Section -->
+        <div id="tab-parcels" class="tab-content">
+            <div class="card list-card">
+                <h3>Recent Parcels</h3>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Code</th>
+                                <th>Recipient</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for parcel in parcels %}
+                            <tr id="row-{{ parcel.id }}">
+                                <td>{{ parcel.created_at }}</td>
+                                <td>{{ parcel.tracking_code }}</td>
+                                <td>{{ parcel.recipient_name }}<br><small>{{ parcel.phone_number }}</small></td>
+                                <td>
+                                    <span class="status-badge status-{{ parcel.status.lower() }}">
+                                        {{ parcel.status }}
+                                    </span>
+                                </td>
+                                <td>
+                                    {% if parcel.status == 'Pending' %}
+                                    <button onclick="updateStatus({{ parcel.id }}, 'Collected')" class="btn-small">
+                                        Mark Collected
+                                    </button>
+                                    {% else %}
+                                    <button onclick="updateStatus({{ parcel.id }}, 'Pending')" class="btn-small"
+                                        style="background: rgba(255, 100, 100, 0.2); border-color: #ff6b6b; font-size: 0.8rem;">
+                                        <i class="fas fa-undo"></i> Revert
+                                    </button>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Messages Section -->
+        <div id="tab-messages" class="tab-content">
+            <div class="card list-card" style="margin-top: 0;">
+                <h3>User Messages</h3>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Sender</th>
+                                <th>Message</th>
+                                <th>Status/Reply</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for msg in messages %}
+                            <tr>
+                                <td>{{ msg.created_at }}</td>
+                                <td>{{ msg.sender_name }}</td>
+                                <td>{{ msg.message }}</td>
+                                <td class="reply-cell">
+                                    <span
+                                        class="status-badge {{ 'status-collected' if msg.status == 'Replied' else 'status-pending' }}">
+                                        {{ msg.status }}
+                                    </span>
+                                    {% if msg.reply %}
+                                    <div
+                                        style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem; border-left: 2px solid #00f0ff; padding-left: 0.5rem;">
+                                        {{ msg.reply }}
+                                    </div>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <button onclick="openReplyModal({{ msg.id }})" class="btn-small"
+                                        style="background: rgba(0, 240, 255, 0.2); border-color: #00f0ff;">
+                                        <i class="fas fa-reply"></i> Reply
+                                    </button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reply Modal -->
+    <div id="replyModal" class="modal"
+        style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:1000; align-items:center; justify-content:center;">
+        <div class="glass-card" style="width: 100%; max-width: 500px; padding: 2rem;">
+            <h3>Reply to Message</h3>
+            <textarea id="replyText" rows="4" placeholder="Type your reply..."
+                style="width:100%; margin: 1rem 0; padding:1rem; border-radius:8px; background:rgba(255,255,255,0.1); border:1px solid var(--glass-border); color:white;"></textarea>
+            <div style="display:flex; gap:1rem; justify-content:flex-end;">
+                <button onclick="closeReplyModal()" class="btn-small"
+                    style="background:rgba(255,100,100,0.2); border-color:#ff6b6b;">Cancel</button>
+                <button onclick="submitReply()" class="btn-small"
+                    style="background:rgba(0,255,136,0.2); border-color:#00ff88;">Send Reply</button>
+            </div>
+        </div>
+
+        <script>
+            function switchTab(tabId, btn) {
+                // Hide all contents
+                document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+                // Remove active class from buttons
+                document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+
+                // Show target content
+                document.getElementById('tab-' + tabId).classList.add('active');
+                // Activate button
+                btn.classList.add('active');
+            }
+
+            // Add Parcel Logic
+            document.getElementById('addParcelForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const data = {
+                    tracking_code: document.getElementById('newTracking').value,
+                    recipient_name: document.getElementById('newName').value,
+                    phone_number: document.getElementById('newPhone').value
+                };
+
+                try {
+                    const res = await fetch('/api/add', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+                    const response = await res.json();
+                    if (res.ok) {
+                        alert('Parcel Added!');
+                        location.reload();
+                    } else {
+                        alert('Error: ' + response.error);
+                    }
+                } catch (err) {
+                    alert('Connection Error');
+                }
+            });
+
+            // Update Status Logic
+            async function updateStatus(id, newStatus) {
+                const action = newStatus === 'Collected' ? 'collect' : 'revert';
+                if (!confirm(`Confirm ${action} parcel?`)) return;
+
+                try {
+                    const res = await fetch('/api/update_status', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ id: id, status: newStatus })
+                    });
+
+                    if (res.ok) {
+                        location.reload();
+                    } else {
+                        alert('Error updating status');
+                    }
+                } catch (err) {
+                    alert('Connection Error');
+                }
+            }
+
+            // --- Reply Modal Logic ---
+            let currentMessageId = null;
+
+            function openReplyModal(id) {
+                currentMessageId = id;
+                document.getElementById('replyModal').style.display = 'flex';
+            }
+
+            function closeReplyModal() {
+                document.getElementById('replyModal').style.display = 'none';
+                document.getElementById('replyText').value = '';
+                currentMessageId = null;
+            }
+
+            async function submitReply() {
+                const reply = document.getElementById('replyText').value.trim();
+                if (!reply) return alert("Please type a reply");
+
+                try {
+                    const res = await fetch('/api/reply_message', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ id: currentMessageId, reply: reply })
+                    });
+
+                    if (res.ok) {
+                        location.reload();
+                    } else {
+                        const data = await res.json();
+                        alert("Error: " + data.error);
+                    }
+                } catch (e) {
+                    alert("Connection Error");
+                }
+            }
+        </script>
+</body>
+
+</html>
