@@ -9,7 +9,7 @@ This system is designed to facilitate digital, organized, and fast management an
 - **Functions**:
     - Log into the system.
     - Input new parcel data (Recipient Name, Phone Number, Tracking Number).
-    - Update parcel collection status (e.g., "Pending" to "Collected").
+    - Update parcel collection status (e.g., "Pending" or "Collected").
     - Manage existing parcel records.
 
 ### 2. User (General User)
