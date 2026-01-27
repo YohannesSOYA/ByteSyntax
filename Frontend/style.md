@@ -1,21 +1,21 @@
 # Style Guide: ByteSyntax Systematic Design
 
-This document formalizes the visual identity, design tokens, and color architectures for the ByteSyntax Parcel Management System, focusing on the **Midnight Tech** core framework.
+This document formalizes the visual identity, design tokens, and color architectures for the ByteSyntax Parcel Management System, focusing on the **Logistic Flow** core framework.
 
-## 🎨 Global Color System: Midnight Tech
+## 🎨 Global Color System: Logistic Flow
 
-The "Midnight Tech" system is the established visual standard for ByteSyntax. It balances industrial precision with high-tech aesthetics to provide a secure and efficient user experience.
+The "Logistic Flow" system is the established visual standard for ByteSyntax. It emphasizes operational efficiency, professional reliability, and high readability through an active light-mode aesthetic.
 
 ### Primary Palette Showcase
 
 | Role | HEX | Preview | Specification | Tailwind Utility |
 | :--- | :--- | :--- | :--- | :--- |
-| **Background** | `#09090B` | ⬛ | Zinc Deep (Base Layer) | `bg-zinc-950` |
-| **Surface** | `#1E293B` | ◼️ | Slate Deep (Elevated Layer) | `bg-slate-800` |
-| **Primary** | `#4F46E5` | 🟦 | Deep Indigo (Brand Identity) | `bg-indigo-600` |
-| **Accent** | `#06B6D4` | 💎 | Electric Cyan (Interaction Focal) | `bg-cyan-500` |
-| **Success** | `#10B981` | 🟩 | Emerald (Positive Outcome) | `bg-emerald-500` |
-| **Warning** | `#F59E0B` | 🟧 | Amber (Pending/Caution) | `bg-amber-500` |
+| **Background** | `#FAFAF9` | ⬜ | Stone White (Base Layer) | `bg-stone-50` |
+| **Surface** | `#FFFFFF` | ⬜ | Pure White (Elevated Layer) | `bg-white` |
+| **Primary** | `#EA580C` | 🟧 | Int. Orange (Action & Brand) | `bg-orange-600` |
+| **Secondary** | `#475569` | 🟦 | Slate Blue (Structural/Neutral) | `bg-slate-600` |
+| **Success** | `#16A34A` | 🟩 | Emerald (Positive Outcome) | `bg-emerald-600` |
+| **Warning** | `#D97706` | 🟨 | Amber (Pending/Caution) | `bg-amber-600` |
 | **Alert** | `#E11D48` | 🟥 | Rose (Destructive/Critical) | `bg-rose-600` |
 
 ---
@@ -25,27 +25,27 @@ Interaction colors designate functional triggers and provide immediate feedback 
 
 ### Primary Action (CTA)
 - **Description**: The standard trigger for critical path transitions (e.g., "Initialize Tracking", "Commit Record").
-- **Recommended**: `Electric Cyan (#06B6D4)` or `Deep Indigo (#4F46E5)`.
+- **Recommended**: `International Orange (#EA580C)`.
 - **Purpose**: Establishes a dominant focal point for primary user objectives.
 
 ### Secondary Action
 - **Description**: Auxiliary triggers for non-critical operations (e.g., "Revert", "Navigate Back", "Detailed View").
-- **Recommended**: `Slate (#64748B)` or `Zinc (#3F3F46)`.
+- **Recommended**: `Slate Blue (#475569)`.
 - **Purpose**: Maintains operational accessibility without competing for visual hierarchy.
 
 ### Destructive Action
 - **Description**: Triggers for irreversible data operations (e.g., "Purge Record", "Reset Parameters").
-- **Recommended**: `Rose (#E11D48)` (High-priority alert color).
+- **Recommended**: `Rose (#E11D48)`.
 - **Purpose**: Provides immediate visual warning to mitigate erroneous data loss.
 
 ### Success State
 - **Description**: Confirms the successful completion of a system process.
-- **Recommended**: `Emerald (#10B981)`.
+- **Recommended**: `Emerald (#16A34A)`.
 - **Purpose**: Validates operational success and ensures user reassurance.
 
 ### Warning State
 - **Description**: Indicates a pending status or localized system anomaly requiring attention.
-- **Recommended**: `Amber (#F59E0B)`.
+- **Recommended**: `Amber (#D97706)`.
 - **Purpose**: Identifies states of concern without indicating total process failure.
 
 ---
