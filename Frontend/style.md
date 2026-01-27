@@ -1,45 +1,22 @@
 # Style Guide: ByteSyntax Systematic Design
 
-This document formalizes the visual identity, design tokens, and color architectures for the ByteSyntax Parcel Management System.
+This document formalizes the visual identity, design tokens, and color architectures for the ByteSyntax Parcel Management System, focusing on the **Midnight Tech** core framework.
 
-## 🎨 Global Color Palettes
+## 🎨 Global Color System: Midnight Tech
 
-The following color systems have been engineered to ensure brand consistency and operational clarity. The "Midnight Tech" system is the recommended standard for enterprise-grade applications.
+The "Midnight Tech" system is the established visual standard for ByteSyntax. It balances industrial precision with high-tech aesthetics to provide a secure and efficient user experience.
 
-### 🌌 1. Midnight Tech (Standard)
-*Application Context: Advanced technological infrastructure and secure digital environments.*
+### Primary Palette Showcase
 
-| Role | Specification | Hex | Tailwind Utility |
-| :--- | :--- | :--- | :--- |
-| **Primary** | Deep Indigo | `#4F46E5` | `bg-indigo-600` |
-| **Accent** | Electric Cyan | `#06B6D4` | `bg-cyan-500` |
-| **Background** | Zinc Deep | `#09090B` | `bg-zinc-950` |
-| **Surface** | Slate Deep | `#1E293B` | `bg-slate-800` |
-| **Success** | Emerald | `#10B981` | `bg-emerald-500` |
-| **Warning** | Amber | `#F59E0B` | `bg-amber-500` |
-
----
-
-### 🏗️ 2. Logistic Flow
-*Application Context: Streamlined operational workflows and professional service delivery.*
-
-| Role | Specification | Hex | Tailwind Utility |
-| :--- | :--- | :--- | :--- |
-| **Primary** | Int. Orange | `#EA580C` | `bg-orange-600` |
-| **Secondary** | Slate Blue | `#475569` | `bg-slate-600` |
-| **Background** | Stone White | `#FAFAF9` | `bg-stone-50` |
-| **Surface** | White | `#FFFFFF` | `bg-white` |
-
----
-
-### 🛡️ 3. Clean Security
-*Application Context: High-trust data verification and minimalist administrative interfaces.*
-
-| Role | Specification | Hex | Tailwind Utility |
-| :--- | :--- | :--- | :--- |
-| **Primary** | Forest Green | `#059669` | `bg-emerald-600` |
-| **Secondary** | Sky Blue | `#0EA5E9` | `bg-sky-500` |
-| **Background** | Slate White | `#F8FAFC` | `bg-slate-50` |
+| Role | HEX | Preview | Specification | Tailwind Utility |
+| :--- | :--- | :--- | :--- | :--- |
+| **Background** | `#09090B` | ⬛ | Zinc Deep (Base Layer) | `bg-zinc-950` |
+| **Surface** | `#1E293B` | ◼️ | Slate Deep (Elevated Layer) | `bg-slate-800` |
+| **Primary** | `#4F46E5` | 🟦 | Deep Indigo (Brand Identity) | `bg-indigo-600` |
+| **Accent** | `#06B6D4` | 💎 | Electric Cyan (Interaction Focal) | `bg-cyan-500` |
+| **Success** | `#10B981` | 🟩 | Emerald (Positive Outcome) | `bg-emerald-500` |
+| **Warning** | `#F59E0B` | 🟧 | Amber (Pending/Caution) | `bg-amber-500` |
+| **Alert** | `#E11D48` | 🟥 | Rose (Destructive/Critical) | `bg-rose-600` |
 
 ---
 
