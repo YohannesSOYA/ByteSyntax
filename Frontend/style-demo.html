@@ -134,24 +134,22 @@
         /* Elevated Card with Border Glow */
         .elevated-card {
             background: var(--color-surface);
-            border: 1px solid rgba(234, 88, 12, 0.2);
+            border: 2px solid #EA580C;
             border-radius: var(--radius-md);
             padding: var(--space-lg);
             box-shadow:
                 0 1px 3px rgba(0, 0, 0, 0.05),
                 0 4px 12px rgba(0, 0, 0, 0.03),
-                0 8px 24px rgba(0, 0, 0, 0.02),
-                0 0 20px rgba(234, 88, 12, 0.08);
+                0 8px 24px rgba(0, 0, 0, 0.02);
             transition: all 300ms ease-in-out;
         }
 
         .elevated-card:hover {
-            border-color: rgba(234, 88, 12, 0.4);
+            border-color: #dc4e0a;
             box-shadow:
                 0 2px 6px rgba(0, 0, 0, 0.06),
                 0 8px 20px rgba(0, 0, 0, 0.04),
-                0 16px 40px rgba(0, 0, 0, 0.03),
-                0 0 30px rgba(234, 88, 12, 0.15);
+                0 16px 40px rgba(0, 0, 0, 0.03);
             transform: translateY(-2px);
         }
 
@@ -570,24 +568,24 @@
 
         <!-- Elevated Cards & Border Glow Demo -->
         <section class="section">
-            <h2 class="heading-2" style="margin-bottom: var(--space-md);">Elevated Cards & Border Glow</h2>
+            <h2 class="heading-2" style="margin-bottom: var(--space-md);">Elevated Cards with Strong Borders</h2>
             <div
                 style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-lg);">
                 <div class="elevated-card">
                     <h3 class="heading-3" style="margin-bottom: var(--space-md);">Layered Shadow Depth</h3>
                     <p class="body-base" style="margin-bottom: var(--space-md);">
                         This card uses multi-layered shadows to create depth without transparency.
-                        The subtle elevation makes it feel "floating" above the background.
+                        The strong 2px orange border provides clear visual definition.
                     </p>
                     <div class="body-small" style="color: #6b7280;">
-                        Hover to see the enhanced glow effect.
+                        Hover to see the enhanced elevation effect.
                     </div>
                 </div>
 
                 <div class="elevated-card">
-                    <h3 class="heading-3" style="margin-bottom: var(--space-md);">Subtle Border Glow</h3>
+                    <h3 class="heading-3" style="margin-bottom: var(--space-md);">Strong Border Definition</h3>
                     <p class="body-base" style="margin-bottom: var(--space-md);">
-                        The thin orange border with a soft glow creates a high-tech, futuristic feel
+                        The solid 2px orange border creates a bold, industrial feel
                         that aligns perfectly with the "Industrial Futurism" aesthetic.
                     </p>
                     <button class="btn btn-primary">Primary Action</button>
@@ -596,7 +594,7 @@
                 <div class="elevated-card">
                     <h3 class="heading-3" style="margin-bottom: var(--space-md);">Interactive Elevation</h3>
                     <p class="body-base" style="margin-bottom: var(--space-md);">
-                        On hover, the card lifts slightly and the glow intensifies,
+                        On hover, the card lifts slightly and the border darkens,
                         providing clear visual feedback for interactive elements.
                     </p>
                     <div style="display: flex; gap: 8px;">
