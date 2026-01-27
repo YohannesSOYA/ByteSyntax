@@ -106,6 +106,15 @@ The visual language of ByteSyntax components follows the principles of **Industr
 
 ---
 
+## 🚫 Design Constraints
+
+### No Gradients Policy
+- **Rationale**: To maintain visual clarity and ensure consistent color reproduction across devices, **gradients are prohibited** in the ByteSyntax design system.
+- **Alternative**: Use solid colors with subtle opacity variations or layered elements to create depth.
+- **Exception**: None. All backgrounds, buttons, and UI elements must use flat, solid colors.
+
+---
+
 ## ✨ Interface Effects & Motion
 - **Atmospheric Depth (Glassmorphism)**: 
   - Standard Elevation: `backdrop-blur-md bg-white/10 border border-white/20`
