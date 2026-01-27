@@ -54,8 +54,8 @@ Interaction colors designate functional triggers and provide immediate feedback 
 A systematic typography scale ensures structural hierarchy and optimal data legibility.
 
 ### Font Specifications
-- **Display & Heading**: `Outfit` (Engineered for modern geometric clarity and premium brand presence)
-- **Body & Data**: `Inter` (Optimized for maximum legibility in complex data environments)
+- **Headings**: `Playfair Display` — A high-contrast serif typeface that adds elegance and a premium feel.
+- **Body**: `Lato` — A clean, humanist sans-serif with excellent legibility and a friendly tone.
 - **Monospace**: `JetBrains Mono` (Utilized for unique identification strings and technical data)
 
 ### Dimensional Scale
