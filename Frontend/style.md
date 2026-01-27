@@ -10,13 +10,13 @@ The "Logistic Flow" system is the established visual standard for ByteSyntax. It
 
 | Role | HEX | Preview | Specification | Tailwind Utility |
 | :--- | :--- | :--- | :--- | :--- |
-| **Background** | `#FAFAF9` | ⬜ | Stone White (Base Layer) | `bg-stone-50` |
-| **Surface** | `#FFFFFF` | ⬜ | Pure White (Elevated Layer) | `bg-white` |
-| **Primary** | `#EA580C` | 🟧 | Int. Orange (Action & Brand) | `bg-orange-600` |
-| **Secondary** | `#475569` | 🟦 | Slate Blue (Structural/Neutral) | `bg-slate-600` |
-| **Success** | `#16A34A` | 🟩 | Emerald (Positive Outcome) | `bg-emerald-600` |
-| **Warning** | `#D97706` | 🟨 | Amber (Pending/Caution) | `bg-amber-600` |
-| **Alert** | `#E11D48` | 🟥 | Rose (Destructive/Critical) | `bg-rose-600` |
+| **Background** | `#FAFAF9` | ![#FAFAF9](https://placehold.co/15x15/FAFAF9/FAFAF9.png) | Stone White (Base Layer) | `bg-stone-50` |
+| **Surface** | `#FFFFFF` | ![#FFFFFF](https://placehold.co/15x15/FFFFFF/FFFFFF.png) | Pure White (Elevated Layer) | `bg-white` |
+| **Primary** | `#EA580C` | ![#EA580C](https://placehold.co/15x15/EA580C/EA580C.png) | Int. Orange (Action & Brand) | `bg-orange-600` |
+| **Secondary** | `#475569` | ![#475569](https://placehold.co/15x15/475569/475569.png) | Slate Blue (Structural/Neutral) | `bg-slate-600` |
+| **Success** | `#16A34A` | ![#16A34A](https://placehold.co/15x15/16A34A/16A34A.png) | Emerald (Positive Outcome) | `bg-emerald-600` |
+| **Warning** | `#D97706` | ![#D97706](https://placehold.co/15x15/D97706/D97706.png) | Amber (Pending/Caution) | `bg-amber-600` |
+| **Alert** | `#E11D48` | ![#E11D48](https://placehold.co/15x15/E11D48/E11D48.png) | Rose (Destructive/Critical) | `bg-rose-600` |
 
 ---
 
