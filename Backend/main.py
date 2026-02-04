@@ -22,18 +22,14 @@ app.add_middleware(
 async def root():
     return {"message": "Welcome to the Parcel Tracking System API"}
 
+from app.db.session import engine
+
 @app.get("/health")
 async def health_check():
-    db_status = "unknown"
     try:
-        database_url = os.getenv("DATABASE_URL")
-        if database_url:
-            engine = create_engine(database_url)
-            with engine.connect() as connection:
-                connection.execute(text("SELECT 1"))
-                db_status = "connected"
-        else:
-            db_status = "error: DATABASE_URL not found"
+        with engine.connect() as connection:
+            connection.execute(text("SELECT 1"))
+            db_status = "connected"
     except Exception as e:
         db_status = f"error: {str(e)}"
     
