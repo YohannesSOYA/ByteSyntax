@@ -8,8 +8,11 @@ This document outlines the tactical plan for transitioning from the **Repository
 The goal is to encapsulate business logic within dedicated services, ensuring the API routers remain clean and focused on HTTP concerns.
 
 ### 📦 Parcel Service (`app/services/parcel_service.py`)
-- **Validation**: Ensure phone numbers follow the normalized standard (e.g., `601xxxxxxxxx`).
-- **Tracking Logic**: Implement specialized search logic that combines `tracking_number` and the last 4 digits of a phone number for enhanced privacy.
+- **Validation**: Ensure phone numbers follow the normalized standard `601xxxxxxxxx` as specified in the PDF.
+- **Enhanced Tracking Logic**: Implement the exact 3-field verification required for public lookup:
+    1.  `student_name` (Full Name)
+    2.  `phone_number` (Full Number)
+    3.  `tracking_number_suffix` (Last 4 digits of tracking number)
 - **Notification Preparation**: Logic to trigger internal events when a parcel is "Collected".
 
 ### 🔐 Auth Service (`app/services/auth_service.py`)
@@ -28,12 +31,13 @@ We will define the external interface of our system using Pydantic for strict da
 
 ### 🛣️ Endpoints (`app/api/`)
 1.  **Public API**:
-    - `GET /parcels/track`: Query status using tracking ID and phone number.
+    - `POST /api/public/check`: Implementation of the 3-field lookup (No auth required).
 2.  **Admin API (Protected)**:
-    - `POST /parcels/`: Create new parcel records.
-    - `GET /parcels/`: List all parcels (with pagination and filters).
-    - `PATCH /parcels/{id}`: Update status or parcel details.
-    - `POST /auth/login`: Administrative authentication.
+    - `POST /api/parcels/`: Create new parcel records (Student Name, Phone, Tracking #, Courier, Notes).
+    - `GET /api/admin/dashboard/stats`: Get counts for "Parcels Today", "Pending", and "Collected" as per PDF wireframe.
+    - `GET /api/parcels/`: List all parcels (Paginated with search by Name/Phone/Status/Date).
+    - `PATCH /api/parcels/{id}/collect`: Specifically for the "Mark as Collected" action with timestamp.
+    - `POST /api/auth/login`: Admin authentication (JWT-based).
 
 ---
 
