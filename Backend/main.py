@@ -21,16 +21,21 @@ async def app_exception_handler(request: Request, exc: AppException):
         content={"message": exc.message, "detail": exc.detail},
     )
 
-# CORS
-origins = [
-    "http://localhost:5173", # Vite default
-    "http://localhost:3000",
-    "*" # Allow all for dev
-]
+import time
+
+@app.middleware("http")
+async def add_process_time_header(request: Request, call_next):
+    start_time = time.time()
+    response = await call_next(request)
+    process_time = time.time() - start_time
+    # Add custom header for debugging
+    response.headers["X-Process-Time"] = str(process_time)
+    print(f"Request: {request.method} {request.url} - Duration: {process_time:.4f}s")
+    return response
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=settings.BACKEND_CORS_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

@@ -18,7 +18,6 @@ def get_analytics_service(db: Session = Depends(deps.get_db)) -> AnalyticsServic
 @router.get("/dashboard/stats", response_model=DashboardStats)
 def get_dashboard_stats(
     service: Annotated[AnalyticsService, Depends(get_analytics_service)],
-    current_admin: Annotated[Admin, Depends(deps.get_current_admin)],
 ) -> Any:
     """
     Get dashboard statistics.

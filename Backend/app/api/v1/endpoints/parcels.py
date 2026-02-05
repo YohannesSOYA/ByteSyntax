@@ -17,7 +17,6 @@ def get_parcel_service(db: Session = Depends(deps.get_db)) -> ParcelService:
 @router.get("/", response_model=List[ParcelRead])
 def read_parcels(
     service: Annotated[ParcelService, Depends(get_parcel_service)],
-    current_admin: Annotated[Admin, Depends(deps.get_current_admin)],
     skip: int = 0,
     limit: int = 100,
 ) -> Any:
@@ -32,7 +31,6 @@ def read_parcels(
 def create_parcel(
     *,
     service: Annotated[ParcelService, Depends(get_parcel_service)],
-    current_admin: Annotated[Admin, Depends(deps.get_current_admin)],
     parcel_in: ParcelCreate,
 ) -> Any:
     """
@@ -50,7 +48,8 @@ def create_parcel(
 def mark_collected(
     *,
     service: Annotated[ParcelService, Depends(get_parcel_service)],
-    current_admin: Annotated[Admin, Depends(deps.get_current_admin)],
+    # We might still want current_admin to record WHO collected it
+    current_admin: Annotated[Admin, Depends(deps.get_current_admin)], 
     id: int,
 ) -> Any:
     """
