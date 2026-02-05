@@ -8,16 +8,27 @@ This document outlines the tactical plan for transitioning from the **Repository
 The goal is to encapsulate business logic within dedicated services, ensuring the API routers remain clean and focused on HTTP concerns.
 
 ### 📦 Parcel Service (`app/services/parcel_service.py`)
-- **Validation**: Ensure phone numbers follow the normalized standard `601xxxxxxxxx` as specified in the PDF.
+- **Data Integrity**: 
+    - `duplicate_tracking_check`: Ensure a parcel with the same tracking number isn't already assigned to a student.
+    - `normalize_phone`: Enforce `601xxxxxxxxx` format for database consistency as per PDF requirements.
 - **Enhanced Tracking Logic**: Implement the exact 3-field verification required for public lookup:
     1.  `student_name` (Full Name)
     2.  `phone_number` (Full Number)
     3.  `tracking_number_suffix` (Last 4 digits of tracking number)
+- **Status Lifecycle**: Logic to prevent unauthorized status changes (e.g., reverting "Collected" to "Pending").
 - **Notification Preparation**: Logic to trigger internal events when a parcel is "Collected".
 
-### 🔐 Auth Service (`app/services/auth_service.py`)
-- **Hashing**: Implement password hashing using `passlib` (bcrypt).
-- **Token Management**: Dependency logic for generating and decoding JWT (JSON Web Tokens).
+### 🔐 Auth & Admin Service (`app/services/auth_service.py`, `app/services/admin_service.py`)
+- **Security**: Implement password hashing using `passlib` (bcrypt) and validation logic.
+- **Token Management**: JWT generation and decoding for secure admin sessions.
+- **Profile Management**: Logic for updating admin account details (Full Name, Username, Password).
+
+### 📊 Analytics Service (`app/services/analytics_service.py`) [NEW]
+- **Dashboard Stats**: Logic to calculate "Parcels Today", "Pending", and "Collected Today" counts.
+- **Activity Log**: (Optional) Logic to retrieve recent parcel events.
+
+### ⚠️ Exception Handling (`app/core/exceptions.py`)
+- Define custom service-level exceptions (e.g., `ParcelNotFoundError`, `DuplicateParcelError`, `InvalidAuthError`) to be handled by API middleware.
 
 ---
 

@@ -21,3 +21,12 @@ class AdminRepository(BaseRepository):
         self.db.commit()
         self.db.refresh(admin)
         return admin
+    def update(self, admin_id: int, **kwargs) -> Admin | None:
+        admin = self.get_by_id(admin_id)
+        if admin:
+            for key, value in kwargs.items():
+                if hasattr(admin, key):
+                    setattr(admin, key, value)
+            self.db.commit()
+            self.db.refresh(admin)
+        return admin
