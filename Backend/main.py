@@ -1,39 +1,43 @@
-import os
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy import create_engine, text
-from dotenv import load_dotenv
+import os
+import sys
 
-# Load environment variables
-load_dotenv()
+# Add directory to allow absolute imports
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-app = FastAPI(title="Parcel Tracking System API")
+from app.api.api import api_router
+from app.core.config import settings
+from app.core.exceptions import AppException
 
-# Configure CORS
+app = FastAPI(title="ByteSyntax Parcel System")
+
+# Custom Exception Handler
+@app.exception_handler(AppException)
+async def app_exception_handler(request: Request, exc: AppException):
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={"message": exc.message, "detail": exc.detail},
+    )
+
+# CORS
+origins = [
+    "http://localhost:5173", # Vite default
+    "http://localhost:3000",
+    "*" # Allow all for dev
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, specify the actual frontend origin
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+app.include_router(api_router, prefix="/api/v1")
+
 @app.get("/")
-async def root():
-    return {"message": "Welcome to the Parcel Tracking System API"}
-
-from app.db.session import engine
-
-@app.get("/health")
-async def health_check():
-    try:
-        with engine.connect() as connection:
-            connection.execute(text("SELECT 1"))
-            db_status = "connected"
-    except Exception as e:
-        db_status = f"error: {str(e)}"
-    
-    return {
-        "status": "healthy",
-        "database": db_status
-    }
+def read_root():
+    return {"message": "Welcome to ByteSyntax Parcel System API"}
