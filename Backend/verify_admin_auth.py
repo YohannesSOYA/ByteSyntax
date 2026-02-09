@@ -13,7 +13,7 @@ def verify_admin_login(username, password):
     }
     encoded_data = urllib.parse.urlencode(data).encode('utf-8')
     
-    print(f"\n--- 🔐 Attempting Admin Login ---")
+    print(f"\n--- Attempting Admin Login ---")
     print(f"URL: {login_url}")
     print(f"Username: {username}")
     
@@ -31,24 +31,24 @@ def verify_admin_login(username, password):
             token_response = json.loads(response_body)
             
             token = token_response.get("access_token")
-            print(f"✅ Login Successful! Status: {status_code}")
+            print(f"Login Successful! Status: {status_code}")
             print(f"Received Token: {token[:20]}...")
             
             # Step 2: Verify access to a protected route
             verify_protected_route(token)
                 
     except urllib.error.HTTPError as e:
-        print(f"\n❌ Login Failed")
+        print(f"\nLogin Failed")
         print(f"HTTP Status: {e.code}")
         print(f"Message: {e.read().decode('utf-8')}")
     except urllib.error.URLError as e:
-        print(f"\n❌ Connection Error")
+        print(f"\nConnection Error")
         print(f"Reason: {e.reason}")
 
 def verify_protected_route(token):
     profile_url = "http://localhost:8000/api/v1/admin/profile"
     
-    print(f"\n--- 🛡️ Verifying Protected Route Access ---")
+    print(f"\n--- Verifying Protected Route Access ---")
     print(f"URL: {profile_url}")
     
     req = urllib.request.Request(
@@ -63,11 +63,11 @@ def verify_protected_route(token):
             response_body = response.read().decode('utf-8')
             profile = json.loads(response_body)
             
-            print(f"✅ Access Granted! Status: {status_code}")
+            print(f"Access Granted! Status: {status_code}")
             print(f"Admin Profile: {json.dumps(profile, indent=2)}")
             
     except urllib.error.HTTPError as e:
-        print(f"\n❌ Access Denied")
+        print(f"\nAccess Denied")
         print(f"HTTP Status: {e.code}")
         print(f"Message: {e.read().decode('utf-8')}")
 

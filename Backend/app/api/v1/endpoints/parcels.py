@@ -6,13 +6,17 @@ from app.api import deps
 from app.models.database.python.admin import Admin
 from app.services.parcel_service import ParcelService
 from app.repositories.parcel_repository import ParcelRepository
+from app.services.email_service import EmailService
 from app.models.schemas.request.parcel_request import ParcelCreate, ParcelStatusUpdate
 from app.models.schemas.response.parcel_response import ParcelRead
 
 router = APIRouter()
 
-def get_parcel_service(db: Session = Depends(deps.get_db)) -> ParcelService:
-    return ParcelService(ParcelRepository(db))
+def get_parcel_service(
+    db: Session = Depends(deps.get_db),
+    email_service: EmailService = Depends(deps.get_email_service)
+) -> ParcelService:
+    return ParcelService(ParcelRepository(db), email_service)
 
 @router.get("/", response_model=List[ParcelRead])
 def read_parcels(
@@ -28,7 +32,7 @@ def read_parcels(
     return service.get_all_parcels()
 
 @router.post("/", response_model=ParcelRead)
-def create_parcel(
+async def create_parcel(
     *,
     service: Annotated[ParcelService, Depends(get_parcel_service)],
     parcel_in: ParcelCreate,
@@ -36,7 +40,7 @@ def create_parcel(
     """
     Create new parcel.
     """
-    return service.register_parcel(
+    return await service.register_parcel(
         student_name=parcel_in.student_name,
         phone_number=parcel_in.phone_number,
         tracking_number=parcel_in.tracking_number,

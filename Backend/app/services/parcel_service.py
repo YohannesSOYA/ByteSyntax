@@ -92,7 +92,7 @@ class ParcelService:
 
     def public_lookup(self, student_name: str, phone_number: str, tracking_suffix: str) -> List[Parcel]:
         normalized_phone = self.normalize_phone(phone_number)
-        return self.parcel_repo.find_for_public_lookup(
+        parcels = self.parcel_repo.find_for_public_lookup(
             student_name=student_name,
             phone_number=normalized_phone,
             tracking_suffix=tracking_suffix
@@ -111,6 +111,7 @@ class ParcelService:
         return self.parcel_repo.mark_as_collected(parcel_id, collected_by_name)
 
     def get_all_parcels(self, **filters) -> List[Parcel]:
+        if 'phone_number' in filters and filters['phone_number']:
             filters['phone_number'] = self.normalize_phone(filters['phone_number'])
         parcels = self.parcel_repo.get_all(**filters)
         return [self._attach_whatsapp_link(p) for p in parcels]

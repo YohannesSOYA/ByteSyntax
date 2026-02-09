@@ -15,7 +15,7 @@ class Parcel(Base):
     courier_name: Mapped[str | None] = mapped_column(String(50), nullable=True)
     arrived_at: Mapped[datetime] = mapped_column(DateTime, nullable=False)
     status: Mapped[ParcelStatus] = mapped_column(
-        Enum(ParcelStatus), 
+        Enum(ParcelStatus, values_callable=lambda x: [e.value for e in x]), 
         default=ParcelStatus.PENDING, 
         nullable=False
     )

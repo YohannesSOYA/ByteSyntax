@@ -1,6 +1,6 @@
 from fastapi_mail import ConnectionConfig, FastMail, MessageSchema, MessageType
 from app.core.config import settings
-from pathlib import Optional
+from typing import Optional
 
 class EmailService:
     def __init__(self):
