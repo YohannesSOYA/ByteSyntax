@@ -33,6 +33,8 @@ async def add_process_time_header(request: Request, call_next):
     print(f"Request: {request.method} {request.url} - Duration: {process_time:.4f}s")
     return response
 
+from fastapi.staticfiles import StaticFiles
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.BACKEND_CORS_ORIGINS,
@@ -41,8 +43,18 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Bridge: Mount the Frontend directory to serve static assets/demos
+# This "links" the frontend without changing any frontend files.
+frontend_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "Frontend")
+if os.path.exists(frontend_path):
+    app.mount("/frontend", StaticFiles(directory=frontend_path), name="frontend")
+
 app.include_router(api_router, prefix="/api/v1")
 
 @app.get("/")
 def read_root():
-    return {"message": "Welcome to ByteSyntax Parcel System API"}
+    return {
+        "message": "ByteSyntax Backend is linked to Frontend",
+        "api_docs": "/docs",
+        "frontend_demos": "/frontend/dashboard-demo.html"
+    }
