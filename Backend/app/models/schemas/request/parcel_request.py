@@ -6,6 +6,7 @@ class ParcelCreate(BaseModel):
     student_name: str = Field(..., min_length=1, description="Full name of the student")
     phone_number: str = Field(..., description="Phone number (will be normalized)")
     tracking_number: str = Field(..., description="Unique tracking number")
+    email: Optional[str] = Field(None, description="Student's email for notifications")
     courier_name: Optional[str] = None
     notes: Optional[str] = None
 

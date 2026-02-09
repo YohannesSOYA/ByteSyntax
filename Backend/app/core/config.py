@@ -13,6 +13,18 @@ class Settings(BaseSettings):
         "http://localhost:8000",  # Backend / Docs
     ]
 
+    # Email Settings
+    MAIL_USERNAME: str = "user@example.com"
+    MAIL_PASSWORD: str = "password"
+    MAIL_FROM: str = "user@example.com"
+    MAIL_PORT: int = 587
+    MAIL_SERVER: str = "smtp.gmail.com"
+    MAIL_FROM_NAME: str = "ByteSyntax Parcel"
+    MAIL_STARTTLS: bool = True
+    MAIL_SSL_TLS: bool = False
+    USE_CREDENTIALS: bool = True
+    VALIDATE_CERTS: bool = True
+
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
 settings = Settings()

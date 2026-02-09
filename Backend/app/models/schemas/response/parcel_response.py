@@ -8,12 +8,14 @@ class ParcelRead(BaseModel):
     student_name: str
     phone_number: str
     tracking_number: str
+    email: Optional[str] = None
     courier_name: Optional[str] = None
     arrived_at: datetime
     status: ParcelStatus
     collected_at: Optional[datetime] = None
     collected_by_name: Optional[str] = None
     notes: Optional[str] = None
+    whatsapp_link: Optional[str] = None
     
     class Config:
         from_attributes = True

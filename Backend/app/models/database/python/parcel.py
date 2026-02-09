@@ -11,6 +11,7 @@ class Parcel(Base):
     student_name: Mapped[str] = mapped_column(String(100), nullable=False)
     phone_number: Mapped[str] = mapped_column(String(20), nullable=False)  # Normalized: 601xxxxxxxxx
     tracking_number: Mapped[str] = mapped_column(String(50), nullable=False)
+    email: Mapped[str | None] = mapped_column(String(255), nullable=True) # For notifications
     courier_name: Mapped[str | None] = mapped_column(String(50), nullable=True)
     arrived_at: Mapped[datetime] = mapped_column(DateTime, nullable=False)
     status: Mapped[ParcelStatus] = mapped_column(

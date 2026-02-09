@@ -42,12 +42,14 @@ class ParcelRepository(BaseRepository):
                phone_number: str, 
                tracking_number: str, 
                arrived_at: datetime,
+               email: str | None = None,
                courier_name: str | None = None,
                notes: str | None = None) -> Parcel:
         parcel = Parcel(
             student_name=student_name,
             phone_number=phone_number,
             tracking_number=tracking_number,
+            email=email,
             arrived_at=arrived_at,
             courier_name=courier_name,
             notes=notes,

@@ -8,3 +8,4 @@ passlib[bcrypt]
 bcrypt>=4.3.0
 pymysql
 python-multipart
+fastapi-mail>=1.4.1
