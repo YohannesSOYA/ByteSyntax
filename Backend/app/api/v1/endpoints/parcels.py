@@ -1,5 +1,5 @@
-from typing import Annotated, Any, List
-from fastapi import APIRouter, Depends, HTTPException
+from typing import Annotated, Any, List, Optional
+from fastapi import APIRouter, Depends, HTTPException, File, UploadFile
 from sqlalchemy.orm import Session
 
 from app.api import deps
@@ -45,6 +45,8 @@ async def create_parcel(
         phone_number=parcel_in.phone_number,
         tracking_number=parcel_in.tracking_number,
         courier_name=parcel_in.courier_name,
+        storage_location=parcel_in.storage_location,
+        arrival_photo_url=parcel_in.arrival_photo_url,
         notes=parcel_in.notes
     )
 
@@ -60,3 +62,25 @@ def mark_collected(
     Mark a parcel as collected.
     """
     return service.mark_collected(id, collected_by_name=current_admin.full_name)
+
+from app.services.upload_service import UploadService
+
+def get_upload_service() -> UploadService:
+    return UploadService()
+
+@router.post("/upload-photo", response_model=dict)
+async def upload_parcel_photo(
+    *,
+    current_admin: Annotated[Admin, Depends(deps.get_current_admin)],
+    upload_service: Annotated[UploadService, Depends(get_upload_service)],
+    file: UploadFile = File(...),
+) -> Any:
+    """
+    Upload a parcel photo. Returns the URL of the uploaded photo.
+    """
+    # Simple validation for image files
+    if not file.content_type.startswith("image/"):
+        raise HTTPException(status_code=400, detail="File must be an image")
+        
+    url = await upload_service.save_parcel_photo(file)
+    return {"url": url}

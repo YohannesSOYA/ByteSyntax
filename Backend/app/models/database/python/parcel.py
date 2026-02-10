@@ -21,6 +21,8 @@ class Parcel(Base):
     )
     collected_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
     collected_by_name: Mapped[str | None] = mapped_column(String(100), nullable=True)
+    storage_location: Mapped[str | None] = mapped_column(String(100), nullable=True) # e.g., "Shelf A-1"
+    arrival_photo_url: Mapped[str | None] = mapped_column(String(255), nullable=True)
     notes: Mapped[str | None] = mapped_column(Text, nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
     updated_at: Mapped[datetime] = mapped_column(

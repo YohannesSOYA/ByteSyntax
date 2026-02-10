@@ -54,6 +54,8 @@ class ParcelService:
                         email: Optional[str] = None,
                         arrived_at: Optional[datetime] = None,
                         courier_name: Optional[str] = None,
+                        storage_location: Optional[str] = None,
+                        arrival_photo_url: Optional[str] = None,
                         notes: Optional[str] = None) -> Parcel:
         
         normalized_phone = self.normalize_phone(phone_number)
@@ -73,6 +75,8 @@ class ParcelService:
             email=email,
             arrived_at=arrived_at,
             courier_name=courier_name,
+            storage_location=storage_location,
+            arrival_photo_url=arrival_photo_url,
             notes=notes
         )
 

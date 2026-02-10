@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Annotated, Any
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
@@ -20,12 +21,28 @@ def get_dashboard_stats(
     service: Annotated[AnalyticsService, Depends(get_analytics_service)],
 ) -> Any:
     """
-    Get dashboard statistics.
+    Get basic dashboard statistics.
     """
-    return service.get_dashboard_summary()
+    stats = service.repo.get_stats()
+    return DashboardStats(
+        pending_parcels=stats["pending"],
+        collected_today=stats["collected_today"],
+        arrived_today=stats["arrived_today"],
+        timestamp=datetime.utcnow()
+    )
+
+@router.get("/analytics/summary", response_model=dict)
+def get_analytics_summary(
+    service: Annotated[AnalyticsService, Depends(get_analytics_service)],
+    current_admin: Annotated[Admin, Depends(deps.get_current_admin)],
+) -> Any:
+    """
+    Get detailed analytics and reporting data.
+    """
+    return service.get_analytics_summary()
 
 @router.get("/profile", response_model=AdminRead)
-def read_current_admin(
+def read_current_admin( 
     current_admin: Annotated[Admin, Depends(deps.get_current_admin)],
 ) -> Any:
     """

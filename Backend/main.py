@@ -10,8 +10,17 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from app.api.api import api_router
 from app.core.config import settings
 from app.core.exceptions import AppException
+from app.core.scheduler import start_scheduler
+from contextlib import asynccontextmanager
 
-app = FastAPI(title="ByteSyntax Parcel System")
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup: Start the background scheduler
+    start_scheduler()
+    yield
+    # Shutdown: Add any cleanup here if needed
+
+app = FastAPI(title="ByteSyntax Parcel System", lifespan=lifespan)
 
 # Custom Exception Handler
 @app.exception_handler(AppException)
@@ -48,6 +57,12 @@ app.add_middleware(
 frontend_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "Frontend")
 if os.path.exists(frontend_path):
     app.mount("/frontend", StaticFiles(directory=frontend_path), name="frontend")
+
+# Mount uploads directory to serve parcel photos
+uploads_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "uploads")
+if not os.path.exists(uploads_path):
+    os.makedirs(uploads_path)
+app.mount("/uploads", StaticFiles(directory=uploads_path), name="uploads")
 
 app.include_router(api_router, prefix="/api/v1")
 

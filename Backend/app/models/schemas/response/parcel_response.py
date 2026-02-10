@@ -14,6 +14,8 @@ class ParcelRead(BaseModel):
     status: ParcelStatus
     collected_at: Optional[datetime] = None
     collected_by_name: Optional[str] = None
+    storage_location: Optional[str] = None
+    arrival_photo_url: Optional[str] = None
     notes: Optional[str] = None
     whatsapp_link: Optional[str] = None
     
@@ -25,6 +27,7 @@ class ParcelPublicRead(BaseModel):
     status: ParcelStatus
     arrived_at: datetime
     collected_at: Optional[datetime] = None
+    storage_location: Optional[str] = None
     
     class Config:
         from_attributes = True

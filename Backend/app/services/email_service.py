@@ -39,3 +39,26 @@ class EmailService:
         )
         
         await self.fm.send_message(message)
+
+    async def send_reminder_email(self, email: str, student_name: str, tracking_number: str, storage_location: Optional[str]):
+        location_info = f" at <b>{storage_location}</b>" if storage_location else ""
+        html = f"""
+        <html>
+        <body>
+            <p>Hi {student_name},</p>
+            <p>This is a friendly reminder that your parcel (Tracking: <b>{tracking_number}</b>) has been waiting for collection for over 5 days{location_info}.</p>
+            <p>Please collect it from the counter at your earliest convenience.</p>
+            <br>
+            <p>Thank you,<br>ByteSyntax Parcel Team</p>
+        </body>
+        </html>
+        """
+        
+        message = MessageSchema(
+            subject="Reminder: Pending Parcel Collection - ByteSyntax",
+            recipients=[email],
+            body=html,
+            subtype=MessageType.html
+        )
+        
+        await self.fm.send_message(message)

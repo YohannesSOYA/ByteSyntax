@@ -1,17 +1,18 @@
-from datetime import datetime
-from typing import Dict, Any
 from app.repositories.parcel_repository import ParcelRepository
 
 class AnalyticsService:
-    def __init__(self, parcel_repo: ParcelRepository):
-        self.parcel_repo = parcel_repo
+    def __init__(self, repo: ParcelRepository):
+        self.repo = repo
 
-    def get_dashboard_summary(self) -> Dict[str, Any]:
-        stats = self.parcel_repo.get_stats()
+    def get_analytics_summary(self) -> dict:
+        stats = self.repo.get_stats()
+        couriers = self.repo.get_courier_distribution()
+        trends = self.repo.get_daily_trends()
+        efficiency = self.repo.get_efficiency_metrics()
         
         return {
-            "pending_parcels": stats["pending"],
-            "collected_today": stats["collected_today"],
-            "arrived_today": stats["arrived_today"],
-            "timestamp": datetime.utcnow()
+            "overview": stats,
+            "courier_distribution": couriers,
+            "daily_trends": trends,
+            "efficiency": efficiency
         }

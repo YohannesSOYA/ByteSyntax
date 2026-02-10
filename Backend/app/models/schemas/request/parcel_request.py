@@ -8,6 +8,8 @@ class ParcelCreate(BaseModel):
     tracking_number: str = Field(..., description="Unique tracking number")
     email: Optional[str] = Field(None, description="Student's email for notifications")
     courier_name: Optional[str] = None
+    storage_location: Optional[str] = Field(None, description="Shelf or bin location")
+    arrival_photo_url: Optional[str] = Field(None, description="URL to the photo of the parcel label")
     notes: Optional[str] = None
 
 class ParcelUpdate(BaseModel):

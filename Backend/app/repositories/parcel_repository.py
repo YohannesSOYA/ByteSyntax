@@ -1,6 +1,6 @@
-from datetime import datetime
+from datetime import datetime, date, timedelta
 from sqlalchemy.orm import Session
-from sqlalchemy import select, Date
+from sqlalchemy import select, Date, text, func, cast
 from app.models.database.python.parcel import Parcel
 from app.models.database.python.enums import ParcelStatus
 from .base_repository import BaseRepository
@@ -44,6 +44,8 @@ class ParcelRepository(BaseRepository):
                arrived_at: datetime,
                email: str | None = None,
                courier_name: str | None = None,
+               storage_location: str | None = None,
+               arrival_photo_url: str | None = None,
                notes: str | None = None) -> Parcel:
         parcel = Parcel(
             student_name=student_name,
@@ -52,6 +54,8 @@ class ParcelRepository(BaseRepository):
             email=email,
             arrived_at=arrived_at,
             courier_name=courier_name,
+            storage_location=storage_location,
+            arrival_photo_url=arrival_photo_url,
             notes=notes,
             status=ParcelStatus.PENDING
         )
@@ -79,8 +83,6 @@ class ParcelRepository(BaseRepository):
         return parcel
 
     def get_stats(self) -> dict:
-        from sqlalchemy import func
-        from datetime import date
         today = date.today()
         
         pending_count = self.db.query(func.count(Parcel.id)).filter(
@@ -101,3 +103,40 @@ class ParcelRepository(BaseRepository):
             "collected_today": collected_today,
             "arrived_today": arrived_today
         }
+
+    def get_stale_parcels(self, days_threshold: int = 5) -> list[Parcel]:
+        threshold_date = datetime.utcnow() - timedelta(days=days_threshold)
+        query = select(Parcel).where(
+            Parcel.status == ParcelStatus.PENDING,
+            Parcel.arrived_at <= threshold_date
+        )
+        return list(self.db.execute(query).scalars().all())
+    def get_courier_distribution(self) -> dict:
+        query = self.db.query(
+            Parcel.courier_name, 
+            func.count(Parcel.id)
+        ).group_by(Parcel.courier_name)
+        results = query.all()
+        return {name if name else "Unknown": count for name, count in results}
+
+    def get_efficiency_metrics(self) -> dict:
+        # Average time in hours from arrived_at to collected_at
+        query = self.db.query(
+            func.avg(func.timestampdiff(text("HOUR"), Parcel.arrived_at, Parcel.collected_at))
+        ).filter(Parcel.status == ParcelStatus.COLLECTED)
+        
+        avg_hours = self.db.execute(query).scalar()
+        return {"avg_collection_time_hours": float(avg_hours) if avg_hours else 0.0}
+
+    def get_daily_trends(self, days: int = 7) -> list:
+        start_date = date.today() - timedelta(days=days)
+        
+        query = self.db.query(
+            cast(Parcel.arrived_at, Date).label("date"),
+            func.count(Parcel.id).label("count")
+        ).filter(cast(Parcel.arrived_at, Date) >= start_date)\
+         .group_by(cast(Parcel.arrived_at, Date))\
+         .order_by("date")
+        
+        results = query.all()
+        return [{"date": str(r.date), "count": r.count} for r in results]
