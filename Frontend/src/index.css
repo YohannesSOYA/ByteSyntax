@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+@theme {
+  /* Logistic Flow Palette */
+  --color-stone-50: #FAFAF9;
+  --color-primary: #EA580C;
+  --color-secondary: #475569;
+  --color-success: #16A34A;
+  --color-warning: #D97706;
+  --color-alert: #E11D48;
+
+  /* Typography */
+  --font-serif: "Playfair Display", serif;
+  --font-sans: "Lato", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+@layer base {
+  body {
+    @apply bg-stone-50 text-slate-900 font-sans;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+}
