@@ -9,15 +9,15 @@ gantt
     title ByteSyntax Frontend Development Roadmap
     dateFormat  YYYY-MM-DD
     section Phase 1: Foundation
-    Setup Technical Infrastructure    :active, f1, 2026-02-10, 2d
-    Design Token Specification       :f2, after f1, 2d
+    Setup Technical Infrastructure    :done, f1, 2026-02-10, 2d
+    Design Token Specification       :done, f2, after f1, 2d
     section Phase 2: Component Library
-    Initialize shadcn/ui            :c1, after f2, 1d
-    Develop Base UI Primitives       :c2, after c1, 3d
+    Initialize shadcn/ui            :done, c1, after f2, 1d
+    Develop Base UI Primitives       :done, c2, after c1, 3d
     section Phase 3: Public Interface
-    Tracking Landing Page            :p1, after c2, 3d
-    Verification Form Logic          :p2, after p1, 2d
-    Status Visualization             :p3, after p2, 2d
+    Tracking Landing Page            :done, p1, after c2, 3d
+    Verification Form Logic          :done, p2, after p1, 2d
+    Status Visualization             :done, p3, after p2, 2d
     section Phase 4: Admin Center
     Secure Login Interface           :a1, after p3, 2d
     Dashboard Bento Grid Layout      :a2, after a1, 3d
