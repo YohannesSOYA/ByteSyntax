@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { Card } from '../components/ui/Card';
@@ -45,7 +46,16 @@ export const TrackingPage = () => {
     const isFormValid = studentName.trim().length > 0 && phone.trim().length >= 4 && suffix.trim().length === 4;
 
     return (
-        <div className="min-h-screen bg-stone-50 flex flex-col items-center justify-center p-6 md:p-12">
+        <div className="min-h-screen bg-stone-50 flex flex-col items-center justify-center p-6 md:p-12 relative">
+            {/* Admin Portal Entry */}
+            <div className="absolute top-6 right-6">
+                <Link to="/admin">
+                    <Button variant="outline" size="sm" className="bg-white/50 backdrop-blur-sm border-slate-200 text-slate-500 hover:text-primary">
+                        Staff Portal
+                    </Button>
+                </Link>
+            </div>
+
             <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}

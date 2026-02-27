@@ -40,9 +40,9 @@ The primary objective of this initiative is to architect a robust, transparent, 
 - [x] **Automated Notification Systems**: Integration of system-triggered status updates (Email) and confirmation protocols (QR).
 
 ### Phase 5: Quality Assurance & Deployment
-- [ ] **Comprehensive Testing Protocols**: Execution of unit, integration, and performance benchmarks.
-- [ ] **User Acceptance Testing (UAT)**: Validating system performance against real-world operational datasets.
-- [ ] **Continuous Integration & Deployment (CI/CD)**: Automating the deployment pipeline to production-ready environments.
+- [x] **Comprehensive Testing Protocols**: Execution of unit, integration, and performance benchmarks.
+- [x] **User Acceptance Testing (UAT)**: Validating system performance against real-world operational datasets.
+- [x] **Continuous Integration & Deployment (CI/CD)**: Automating the deployment pipeline to production-ready environments.
 
 ## 📈 Key Performance Indicators (KPIs)
 1. **Latency**: Achieving < 500ms response time for parcel status inquiries.

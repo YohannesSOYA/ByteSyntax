@@ -1,0 +1,818 @@
+﻿
+[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90mC:/Users/User/OneDrive/Documents/ByteSyntax2/ByteSyntax/Frontend[39m
+
+node.exe : 
+[90mstderr[2m | src/p
+ages/QrScannerPage.test
+.tsx[2m > [22m[2mQrS
+cannerPage[2m > 
+[22m[2mhandles 
+successful QR scan
+At line:1 char:1
++ & "C:\Program 
+Files\nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo 
+...
++ ~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~
+    + CategoryInfo     
+         : NotSpecifi  
+  ed: ([90mstderr[   
+ 2m...cessful QR sc    
+an:String) [], Rem    
+oteException
+    + FullyQualifiedEr 
+   rorId : NativeComm  
+  andError
+ 
+[22m[39mAn update to 
+QrScannerPage inside a 
+test was not wrapped 
+in act(...).
+
+When testing, code 
+that causes React 
+state updates should 
+be wrapped into 
+act(...):
+
+act(() => {
+  /* fire events that 
+update state */
+});
+/* assert on the 
+output */
+
+This ensures that 
+you're testing the 
+behavior the user 
+would see in the 
+browser. Learn more at 
+https://react.dev/link/
+wrap-tests-with-act
+An update to 
+QrScannerPage inside a 
+test was not wrapped 
+in act(...).
+
+When testing, code 
+that causes React 
+state updates should 
+be wrapped into 
+act(...):
+
+act(() => {
+  /* fire events that 
+update state */
+});
+/* assert on the 
+output */
+
+This ensures that 
+you're testing the 
+behavior the user 
+would see in the 
+browser. Learn more at 
+https://react.dev/link/
+wrap-tests-with-act
+
+[90mstderr[2m | src/p
+ages/QrScannerPage.test
+.tsx[2m > [22m[2mQrS
+cannerPage[2m > 
+[22m[2mhandles 
+successful QR scan
+[22m[39mAn error 
+occurred in the 
+<Button> component.
+
+Consider adding an 
+error boundary to your 
+tree to customize 
+error handling 
+behavior.
+Visit https://react.dev
+/link/error-boundaries 
+to learn more about 
+error boundaries.
+
+
+[90mstderr[2m | src/p
+ages/QrScannerPage.test
+.tsx[2m > [22m[2mQrS
+cannerPage[2m > 
+[22m[2mhandles 
+invalid QR code
+[22m[39mAn update to 
+QrScannerPage inside a 
+test was not wrapped 
+in act(...).
+
+When testing, code 
+that causes React 
+state updates should 
+be wrapped into 
+act(...):
+
+act(() => {
+  /* fire events that 
+update state */
+});
+/* assert on the 
+output */
+
+This ensures that 
+you're testing the 
+behavior the user 
+would see in the 
+browser. Learn more at 
+https://react.dev/link/
+wrap-tests-with-act
+
+[90mstderr[2m | src/p
+ages/QrScannerPage.test
+.tsx[2m > [22m[2mQrS
+cannerPage[2m > 
+[22m[2mhandles 
+invalid QR code
+[22m[39mAn error 
+occurred in the 
+<Button> component.
+
+Consider adding an 
+error boundary to your 
+tree to customize 
+error handling 
+behavior.
+Visit https://react.dev
+/link/error-boundaries 
+to learn more about 
+error boundaries.
+
+
+[90mstderr[2m | src/p
+ages/QrScannerPage.test
+.tsx[2m > [22m[2mQrS
+cannerPage[2m > 
+[22m[2mhandles 
+mutation error
+[22m[39mAn update to 
+QrScannerPage inside a 
+test was not wrapped 
+in act(...).
+
+When testing, code 
+that causes React 
+state updates should 
+be wrapped into 
+act(...):
+
+act(() => {
+  /* fire events that 
+update state */
+});
+/* assert on the 
+output */
+
+This ensures that 
+you're testing the 
+behavior the user 
+would see in the 
+browser. Learn more at 
+https://react.dev/link/
+wrap-tests-with-act
+An update to 
+QrScannerPage inside a 
+test was not wrapped 
+in act(...).
+
+When testing, code 
+that causes React 
+state updates should 
+be wrapped into 
+act(...):
+
+act(() => {
+  /* fire events that 
+update state */
+});
+/* assert on the 
+output */
+
+This ensures that 
+you're testing the 
+behavior the user 
+would see in the 
+browser. Learn more at 
+https://react.dev/link/
+wrap-tests-with-act
+
+[90mstderr[2m | src/p
+ages/QrScannerPage.test
+.tsx[2m > [22m[2mQrS
+cannerPage[2m > 
+[22m[2mhandles 
+mutation error
+[22m[39mAn error 
+occurred in the 
+<Button> component.
+
+Consider adding an 
+error boundary to your 
+tree to customize 
+error handling 
+behavior.
+Visit https://react.dev
+/link/error-boundaries 
+to learn more about 
+error boundaries.
+
+
+ [31mΓ¥»[39m src/pages/QrScannerPage.test.tsx [2m([22m[2m4 tests[22m[2m | [22m[31m3 failed[39m[2m)[22m[33m 3071[2mms[22m[39m
+     [32mΓ£ô[39m renders the scanner interface[32m 25[2mms[22m[39m
+[31m     [31m├ù[31m handles successful QR scan[39m[33m 1018[2mms[22m[39m
+[31m     [31m├ù[31m handles invalid QR code[39m[33m 1016[2mms[22m[39m
+[31m     [31m├ù[31m handles mutation error[39m[33m 1012[2mms[22m[39m
+
+[31mΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+ΓÄ»[39m[1m[41m 
+Failed Tests 3 [49m[2
+2m[31mΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»Γ
+Ä»ΓÄ»[39m
+
+[41m[1m FAIL 
+[22m[49m src/pages/Qr
+ScannerPage.test.tsx[2
+m > 
+[22mQrScannerPage[2m 
+> [22mhandles 
+successful QR scan
+[31m[1mTestingLibrary
+ElementError[22m: 
+Unable to find an 
+element with the text: 
+/Collection 
+Confirmed/i. This 
+could be because the 
+text is broken up by 
+multiple elements. In 
+this case, you can 
+provide a function for 
+your text matcher to 
+make your matcher more 
+flexible.
+
+Ignored nodes: 
+comments, script, style
+[36m<body>[31m
+  [36m<div />[31m
+[36m</body>[31m
+
+Ignored nodes: 
+comments, script, style
+[36m<html>[31m
+  [36m<head />[31m
+  [36m<body>[31m
+    [36m<div />[31m
+  [36m</body>[31m
+[36m</html>[31m[39m
+[90m [2mΓ¥»[22m 
+Proxy.waitForWrapper no
+de_modules/@testing-lib
+rary/dom/dist/wait-for.
+js:[2m163:27[22m[39m
+[36m [2mΓ¥»[22m src/
+pages/QrScannerPage.tes
+t.tsx:[2m89:15[22m[3
+9m
+    [90m 87| [39m    
+    [34monScanSuccess
+[39m([32m'bs-parcel:42
+'[39m)[33m;[39m
+    [90m 88| [39m
+    [90m 89| [39m    
+    [35mawait[39m 
+[34mwaitFor[39m(() 
+[33m=>[39m {
+    [90m   | [39m    
+          [31m^[39m
+    [90m 90| [39m    
+        expect(screen.g
+etByText(/Collection Co
+nfirmed/i)).toBeInThΓÇª
+    [90m 91| [39m    
+        [34mexpect[39
+m(screen[33m.[39m[34
+mgetByText[39m([36m/I
+D: 42/i[39m))[33m.[3
+9m[34mtoBeInTheDocumen
+t[39m()[33m;[39m
+
+[31m[2mΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ
+»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»Γ
+Ä»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»[1/3]ΓÄ»[2
+2m[39m
+
+[41m[1m FAIL 
+[22m[49m src/pages/Qr
+ScannerPage.test.tsx[2
+m > 
+[22mQrScannerPage[2m 
+> [22mhandles invalid 
+QR code
+[31m[1mTestingLibrary
+ElementError[22m: 
+Unable to find an 
+element with the text: 
+/Verification 
+Failed/i. This could 
+be because the text is 
+broken up by multiple 
+elements. In this 
+case, you can provide 
+a function for your 
+text matcher to make 
+your matcher more 
+flexible.
+
+Ignored nodes: 
+comments, script, style
+[36m<body>[31m
+  [36m<div />[31m
+[36m</body>[31m
+
+Ignored nodes: 
+comments, script, style
+[36m<html>[31m
+  [36m<head />[31m
+  [36m<body>[31m
+    [36m<div />[31m
+  [36m</body>[31m
+[36m</html>[31m[39m
+[90m [2mΓ¥»[22m 
+Proxy.waitForWrapper no
+de_modules/@testing-lib
+rary/dom/dist/wait-for.
+js:[2m163:27[22m[39m
+[36m [2mΓ¥»[22m src/
+pages/QrScannerPage.tes
+t.tsx:[2m105:15[22m[
+39m
+    [90m103| [39m    
+    [34monScanSuccess
+[39m([32m'invalid-payl
+oad'[39m)[33m;[39m
+    [90m104| [39m
+    [90m105| [39m    
+    [35mawait[39m 
+[34mwaitFor[39m(() 
+[33m=>[39m {
+    [90m   | [39m    
+          [31m^[39m
+    [90m106| [39m    
+        expect(screen.g
+etByText(/Verification 
+Failed/i)).toBeInTheΓÇª
+    [90m107| [39m    
+        expect(screen.g
+etByText(/not a valid 
+ByteSyntax parcel QR 
+ΓÇª
+
+[31m[2mΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ
+»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»Γ
+Ä»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»[2/3]ΓÄ»[2
+2m[39m
+
+[41m[1m FAIL 
+[22m[49m src/pages/Qr
+ScannerPage.test.tsx[2
+m > 
+[22mQrScannerPage[2m 
+> [22mhandles 
+mutation error
+[31m[1mTestingLibrary
+ElementError[22m: 
+Unable to find an 
+element with the text: 
+/Verification 
+Failed/i. This could 
+be because the text is 
+broken up by multiple 
+elements. In this 
+case, you can provide 
+a function for your 
+text matcher to make 
+your matcher more 
+flexible.
+
+Ignored nodes: 
+comments, script, style
+[36m<body>[31m
+  [36m<div />[31m
+[36m</body>[31m
+
+Ignored nodes: 
+comments, script, style
+[36m<html>[31m
+  [36m<head />[31m
+  [36m<body>[31m
+    [36m<div />[31m
+  [36m</body>[31m
+[36m</html>[31m[39m
+[90m [2mΓ¥»[22m 
+Proxy.waitForWrapper no
+de_modules/@testing-lib
+rary/dom/dist/wait-for.
+js:[2m163:27[22m[39m
+[36m [2mΓ¥»[22m src/
+pages/QrScannerPage.tes
+t.tsx:[2m126:15[22m[
+39m
+    [90m124| [39m    
+    [34monScanSuccess
+[39m([32m'bs-parcel:12
+3'[39m)[33m;[39m
+    [90m125| [39m
+    [90m126| [39m    
+    [35mawait[39m 
+[34mwaitFor[39m(() 
+[33m=>[39m {
+    [90m   | [39m    
+          [31m^[39m
+    [90m127| [39m    
+        expect(screen.g
+etByText(/Verification 
+Failed/i)).toBeInTheΓÇª
+    [90m128| [39m    
+        expect(screen.g
+etByText(/Backend error
+/i)).toBeInTheDocumeΓÇª
+
+[31m[2mΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ
+»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»Γ
+Ä»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»[3/3]ΓÄ»[2
+2m[39m
+
+[31mΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+[39m[1m[41m 
+Unhandled Errors [49m
+[22m[31mΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ
+»ΓÄ»[39m
+[31m[1m
+Vitest caught 3 
+unhandled errors 
+during the test run.
+This might cause false 
+positive tests. 
+Resolve unhandled 
+errors to make sure 
+your tests are not 
+affected.[22m[39m
+
+[31mΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»[3
+9m[1m[41m Uncaught 
+Exception [49m[22m[3
+1mΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»[39m
+[31m[1mError[22m: 
+Element type is 
+invalid: expected a 
+string (for built-in 
+components) or a 
+class/function (for 
+composite components) 
+but got: undefined. 
+You likely forgot to 
+export your component 
+from the file it's 
+defined in, or you 
+might have mixed up 
+default and named 
+imports.
+
+Check the render 
+method of 
+`Button`.[39m
+[90m [2mΓ¥»[22m crea
+teFiberFromTypeAndProps
+ node_modules/react-dom
+/cjs/react-dom-client.d
+evelopment.js:[2m5021:
+28[22m[39m
+[90m [2mΓ¥»[22m 
+createFiberFromElement 
+node_modules/react-dom/
+cjs/react-dom-client.de
+velopment.js:[2m5035:1
+4[22m[39m
+[90m [2mΓ¥»[22m reco
+ncileChildFibersImpl no
+de_modules/react-dom/cj
+s/react-dom-client.deve
+lopment.js:[2m6920:31
+[22m[39m
+[90m [2mΓ¥»[22m node
+_modules/react-dom/cjs/
+react-dom-client.develo
+pment.js:[2m7098:33[2
+2m[39m
+[90m [2mΓ¥»[22m 
+reconcileChildren node_
+modules/react-dom/cjs/r
+eact-dom-client.develop
+ment.js:[2m9701:13[22
+m[39m
+[90m [2mΓ¥»[22m upda
+teFunctionComponent nod
+e_modules/react-dom/cjs
+/react-dom-client.devel
+opment.js:[2m10182:7[
+22m[39m
+[90m [2mΓ¥»[22m 
+beginWork node_modules/
+react-dom/cjs/react-dom
+-client.development.js:
+[2m11778:18[22m[39m
+[90m [2mΓ¥»[22m 
+runWithFiberInDEV node_
+modules/react-dom/cjs/r
+eact-dom-client.develop
+ment.js:[2m874:13[22m
+[39m
+[90m [2mΓ¥»[22m 
+performUnitOfWork node_
+modules/react-dom/cjs/r
+eact-dom-client.develop
+ment.js:[2m17641:22[2
+2m[39m
+[90m [2mΓ¥»[22m 
+workLoopSync node_modul
+es/react-dom/cjs/react-
+dom-client.development.
+js:[2m17469:41[22m[3
+9m
+
+[31mThis error 
+originated in "[1msrc/
+pages/QrScannerPage.tes
+t.tsx[22m" test file. 
+It doesn't mean the 
+error was thrown 
+inside the file 
+itself, but while it 
+was running.[39m
+[31mThe latest test 
+that might've caused 
+the error is 
+"[1mhandles 
+successful QR 
+scan[22m". It might 
+mean one of the 
+following:
+- The error was 
+thrown, while Vitest 
+was running this test.
+- If the error 
+occurred after the 
+test had been 
+completed, this was 
+the last documented 
+test before it was 
+thrown.[39m
+
+[31mΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»[3
+9m[1m[41m Uncaught 
+Exception [49m[22m[3
+1mΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»[39m
+[31m[1mError[22m: 
+Element type is 
+invalid: expected a 
+string (for built-in 
+components) or a 
+class/function (for 
+composite components) 
+but got: undefined. 
+You likely forgot to 
+export your component 
+from the file it's 
+defined in, or you 
+might have mixed up 
+default and named 
+imports.
+
+Check the render 
+method of 
+`Button`.[39m
+[90m [2mΓ¥»[22m crea
+teFiberFromTypeAndProps
+ node_modules/react-dom
+/cjs/react-dom-client.d
+evelopment.js:[2m5021:
+28[22m[39m
+[90m [2mΓ¥»[22m 
+createFiberFromElement 
+node_modules/react-dom/
+cjs/react-dom-client.de
+velopment.js:[2m5035:1
+4[22m[39m
+[90m [2mΓ¥»[22m reco
+ncileChildFibersImpl no
+de_modules/react-dom/cj
+s/react-dom-client.deve
+lopment.js:[2m6920:31
+[22m[39m
+[90m [2mΓ¥»[22m node
+_modules/react-dom/cjs/
+react-dom-client.develo
+pment.js:[2m7098:33[2
+2m[39m
+[90m [2mΓ¥»[22m 
+reconcileChildren node_
+modules/react-dom/cjs/r
+eact-dom-client.develop
+ment.js:[2m9701:13[22
+m[39m
+[90m [2mΓ¥»[22m upda
+teFunctionComponent nod
+e_modules/react-dom/cjs
+/react-dom-client.devel
+opment.js:[2m10182:7[
+22m[39m
+[90m [2mΓ¥»[22m 
+beginWork node_modules/
+react-dom/cjs/react-dom
+-client.development.js:
+[2m11778:18[22m[39m
+[90m [2mΓ¥»[22m 
+runWithFiberInDEV node_
+modules/react-dom/cjs/r
+eact-dom-client.develop
+ment.js:[2m874:13[22m
+[39m
+[90m [2mΓ¥»[22m 
+performUnitOfWork node_
+modules/react-dom/cjs/r
+eact-dom-client.develop
+ment.js:[2m17641:22[2
+2m[39m
+[90m [2mΓ¥»[22m 
+workLoopSync node_modul
+es/react-dom/cjs/react-
+dom-client.development.
+js:[2m17469:41[22m[3
+9m
+
+[31mThis error 
+originated in "[1msrc/
+pages/QrScannerPage.tes
+t.tsx[22m" test file. 
+It doesn't mean the 
+error was thrown 
+inside the file 
+itself, but while it 
+was running.[39m
+[31mThe latest test 
+that might've caused 
+the error is 
+"[1mhandles invalid 
+QR code[22m". It 
+might mean one of the 
+following:
+- The error was 
+thrown, while Vitest 
+was running this test.
+- If the error 
+occurred after the 
+test had been 
+completed, this was 
+the last documented 
+test before it was 
+thrown.[39m
+
+[31mΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»[3
+9m[1m[41m Uncaught 
+Exception [49m[22m[3
+1mΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»[39m
+[31m[1mError[22m: 
+Element type is 
+invalid: expected a 
+string (for built-in 
+components) or a 
+class/function (for 
+composite components) 
+but got: undefined. 
+You likely forgot to 
+export your component 
+from the file it's 
+defined in, or you 
+might have mixed up 
+default and named 
+imports.
+
+Check the render 
+method of 
+`Button`.[39m
+[90m [2mΓ¥»[22m crea
+teFiberFromTypeAndProps
+ node_modules/react-dom
+/cjs/react-dom-client.d
+evelopment.js:[2m5021:
+28[22m[39m
+[90m [2mΓ¥»[22m 
+createFiberFromElement 
+node_modules/react-dom/
+cjs/react-dom-client.de
+velopment.js:[2m5035:1
+4[22m[39m
+[90m [2mΓ¥»[22m reco
+ncileChildFibersImpl no
+de_modules/react-dom/cj
+s/react-dom-client.deve
+lopment.js:[2m6920:31
+[22m[39m
+[90m [2mΓ¥»[22m node
+_modules/react-dom/cjs/
+react-dom-client.develo
+pment.js:[2m7098:33[2
+2m[39m
+[90m [2mΓ¥»[22m 
+reconcileChildren node_
+modules/react-dom/cjs/r
+eact-dom-client.develop
+ment.js:[2m9701:13[22
+m[39m
+[90m [2mΓ¥»[22m upda
+teFunctionComponent nod
+e_modules/react-dom/cjs
+/react-dom-client.devel
+opment.js:[2m10182:7[
+22m[39m
+[90m [2mΓ¥»[22m 
+beginWork node_modules/
+react-dom/cjs/react-dom
+-client.development.js:
+[2m11778:18[22m[39m
+[90m [2mΓ¥»[22m 
+runWithFiberInDEV node_
+modules/react-dom/cjs/r
+eact-dom-client.develop
+ment.js:[2m874:13[22m
+[39m
+[90m [2mΓ¥»[22m 
+performUnitOfWork node_
+modules/react-dom/cjs/r
+eact-dom-client.develop
+ment.js:[2m17641:22[2
+2m[39m
+[90m [2mΓ¥»[22m 
+workLoopSync node_modul
+es/react-dom/cjs/react-
+dom-client.development.
+js:[2m17469:41[22m[3
+9m
+
+[31mThis error 
+originated in "[1msrc/
+pages/QrScannerPage.tes
+t.tsx[22m" test file. 
+It doesn't mean the 
+error was thrown 
+inside the file 
+itself, but while it 
+was running.[39m
+[31mThe latest test 
+that might've caused 
+the error is 
+"[1mhandles mutation 
+error[22m". It might 
+mean one of the 
+following:
+- The error was 
+thrown, while Vitest 
+was running this test.
+- If the error 
+occurred after the 
+test had been 
+completed, this was 
+the last documented 
+test before it was 
+thrown.[39m
+[31mΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ
+»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»Γ
+Ä»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+ΓÄ»[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m3 failed[39m[22m[2m | [22m[1m[32m1 passed[39m[22m[90m (4)[39m
+[2m     Errors [22m [1m[31m3 errors[39m[22m
+[2m   Start at [22m 23:37:47
+[2m   Duration [22m 4.88s[2m (transform 160ms, setup 250ms, import 534ms, tests 3.07s, environment 840ms)[22m
+

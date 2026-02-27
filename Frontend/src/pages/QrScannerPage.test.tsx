@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, act } from '@testing-library/react';
 import { QrScannerPage } from './QrScannerPage';
 import { useParcels } from '../features/dashboard/hooks/useParcels';
 import { Html5QrcodeScanner } from 'html5-qrcode';
@@ -14,25 +14,17 @@ vi.mock('../components/common/Layout', () => ({
 }));
 
 // Mock framer-motion
-vi.mock('framer-motion', () => {
-    const mockComponent = (Component: string) => {
-        return ({ children, whileHover, whileTap, initial, animate, exit, transition, ...props }: any) => {
-            const Tag = Component as any;
-            return <Tag {...props}>{children}</Tag>;
-        };
-    };
-
-    return {
-        motion: {
-            div: mockComponent('div'),
-            h2: mockComponent('h2'),
-            h3: mockComponent('h3'),
-            p: mockComponent('p'),
-            span: mockComponent('span'),
-        },
-        AnimatePresence: ({ children }: any) => <>{children}</>,
-    };
-});
+vi.mock('framer-motion', () => ({
+    motion: {
+        div: ({ children }: any) => <div>{children}</div>,
+        h2: ({ children }: any) => <h2>{children}</h2>,
+        h3: ({ children }: any) => <h3>{children}</h3>,
+        p: ({ children }: any) => <p>{children}</p>,
+        span: ({ children }: any) => <span>{children}</span>,
+        button: ({ children }: any) => <button>{children}</button>,
+    },
+    AnimatePresence: ({ children }: any) => <>{children}</>,
+}));
 
 describe('QrScannerPage', () => {
     let mockCollectParcel: any;
@@ -50,10 +42,11 @@ describe('QrScannerPage', () => {
 
         mockScannerRender = vi.fn();
         mockScannerClear = vi.fn().mockResolvedValue(undefined);
-        (Html5QrcodeScanner as any).mockImplementation(() => ({
-            render: mockScannerRender,
-            clear: mockScannerClear
-        }));
+        (Html5QrcodeScanner as any).mockImplementation(function (this: any) {
+            this.render = mockScannerRender;
+            this.clear = mockScannerClear;
+            return this;
+        });
     });
 
     it('renders the scanner interface', () => {
@@ -79,11 +72,13 @@ describe('QrScannerPage', () => {
         const onScanSuccess = mockScannerRender.mock.calls[0][0];
 
         // Mock successful collection mutation
-        mockCollectParcel.mockImplementation((id, options) => {
+        mockCollectParcel.mockImplementation((id: number, options: any) => {
             options.onSuccess();
         });
 
-        onScanSuccess('bs-parcel:42');
+        await act(async () => {
+            onScanSuccess('bs-parcel:42');
+        });
 
         await waitFor(() => {
             expect(screen.getByText(/Collection Confirmed/i)).toBeInTheDocument();
@@ -99,7 +94,9 @@ describe('QrScannerPage', () => {
         );
 
         const onScanSuccess = mockScannerRender.mock.calls[0][0];
-        onScanSuccess('invalid-payload');
+        await act(async () => {
+            onScanSuccess('invalid-payload');
+        });
 
         await waitFor(() => {
             expect(screen.getByText(/Verification Failed/i)).toBeInTheDocument();
@@ -116,11 +113,13 @@ describe('QrScannerPage', () => {
 
         const onScanSuccess = mockScannerRender.mock.calls[0][0];
 
-        mockCollectParcel.mockImplementation((id, options) => {
+        mockCollectParcel.mockImplementation((id: number, options: any) => {
             options.onError(new Error('Backend error'));
         });
 
-        onScanSuccess('bs-parcel:123');
+        await act(async () => {
+            onScanSuccess('bs-parcel:123');
+        });
 
         await waitFor(() => {
             expect(screen.getByText(/Verification Failed/i)).toBeInTheDocument();

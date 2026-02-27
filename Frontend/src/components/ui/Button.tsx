@@ -36,7 +36,7 @@ export const Button = ({
             whileTap={{ scale: 0.98 }}
             className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`}
             disabled={isLoading || props.disabled}
-            {...props}
+            {...(props as any)}
         >
             {isLoading ? (
                 <span className="flex items-center gap-2">
