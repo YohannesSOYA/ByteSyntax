@@ -5,15 +5,21 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     error?: string;
 }
 
-export const Input = ({ label, error, className, ...props }: InputProps) => {
+export const Input = ({ label, error, className, id, ...props }: InputProps) => {
+    const inputId = id || (label ? label.toLowerCase().replace(/\s+/g, '-') : undefined);
+
     return (
         <div className="flex flex-col gap-2 w-full">
             {label && (
-                <label className="text-sm font-medium text-slate-600 ml-1">
+                <label
+                    htmlFor={inputId}
+                    className="text-sm font-medium text-slate-600 ml-1"
+                >
                     {label}
                 </label>
             )}
             <input
+                id={inputId}
                 className={`
           w-full px-4 py-3 rounded-2xl bg-white border border-slate-200 
           text-slate-900 placeholder:text-slate-400

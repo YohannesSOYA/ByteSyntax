@@ -4,6 +4,7 @@ import { queryClient } from './lib/queryClient';
 import { TrackingPage } from './pages/TrackingPage';
 import { LoginPage } from './pages/LoginPage';
 import { DashboardPage } from './pages/DashboardPage';
+import { QrScannerPage } from './pages/QrScannerPage';
 
 function App() {
     return (
@@ -18,6 +19,7 @@ function App() {
 
                     {/* Admin: Dashboard (auth-guarded inside DashboardPage) */}
                     <Route path="/admin/dashboard" element={<DashboardPage />} />
+                    <Route path="/admin/scan" element={<QrScannerPage />} />
 
                     {/* Fallback */}
                     <Route path="*" element={<Navigate to="/" replace />} />

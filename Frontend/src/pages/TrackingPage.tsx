@@ -4,6 +4,7 @@ import { Input } from '../components/ui/Input';
 import { Card } from '../components/ui/Card';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useParcelTracking } from '../features/tracking/hooks/useParcelTracking';
+import { QRCodeCanvas } from 'qrcode.react';
 import type { ParcelRead } from '../features/dashboard/types/dashboard.types';
 
 export const TrackingPage = () => {
@@ -107,8 +108,8 @@ export const TrackingPage = () => {
                             {resultStatus === 'found' ? (
                                 parcels.map((parcel) => (
                                     <Card key={parcel.id} glass className={`border text-center p-8 ${parcel.status === 'Pending'
-                                            ? 'bg-emerald-50/50 border-emerald-200'
-                                            : 'bg-slate-100/50 border-slate-200'
+                                        ? 'bg-emerald-50/50 border-emerald-200'
+                                        : 'bg-slate-100/50 border-slate-200'
                                         }`}>
                                         <div className="flex flex-col items-center gap-4">
                                             <div className={`h-16 w-16 rounded-full flex items-center justify-center text-white text-3xl shadow-lg ${parcel.status === 'Pending' ? 'bg-emerald-500 shadow-emerald-200' : 'bg-slate-400 shadow-slate-200'
@@ -131,6 +132,35 @@ export const TrackingPage = () => {
                                                 }`}>
                                                 LOC: {parcel.notes || '-'} | REF: {parcel.tracking_number}
                                             </div>
+
+                                            {parcel.status === 'Pending' && (
+                                                <motion.div
+                                                    initial={{ opacity: 0, scale: 0.8 }}
+                                                    animate={{ opacity: 1, scale: 1 }}
+                                                    transition={{ delay: 0.2 }}
+                                                    className="mt-6 p-4 bg-white rounded-2xl shadow-inner border border-emerald-100/50 flex flex-col items-center gap-3"
+                                                >
+                                                    <div className="p-2 bg-white rounded-xl shadow-sm border border-slate-100">
+                                                        <QRCodeCanvas
+                                                            value={`bs-parcel:${parcel.id}`}
+                                                            size={140}
+                                                            level="H"
+                                                            includeMargin={false}
+                                                            imageSettings={{
+                                                                src: "/logo-mini.png", // Fallback or placeholder for branding if available
+                                                                x: undefined,
+                                                                y: undefined,
+                                                                height: 24,
+                                                                width: 24,
+                                                                excavate: true,
+                                                            }}
+                                                        />
+                                                    </div>
+                                                    <p className="text-[10px] font-bold text-emerald-600 uppercase tracking-widest">
+                                                        Scan for Collection
+                                                    </p>
+                                                </motion.div>
+                                            )}
                                         </div>
                                     </Card>
                                 ))
