@@ -22,8 +22,18 @@ def login_access_token(
     """
     try:
         admin = admin_service.get_admin_by_username(form_data.username)
+        # Authentication check
         if not auth_service.verify_password(form_data.password, admin.password_hash):
              raise AuthException("Incorrect username or password")
+             
+        # Self-healing: If successfully logged in with plaintext, migrate to hash
+        if not auth_service.is_bcrypt_hash(admin.password_hash):
+            admin_service.update_admin_profile(
+                admin_id=admin.id,
+                password=form_data.password
+            )
+            print(f"Self-healing: Migrated plaintext password for admin '{admin.username}' to secure hash.")
+            
     except Exception:
         # Generic error message to prevent enumeration (or bubble up specific one)
         raise HTTPException(status_code=400, detail="Incorrect username or password")
