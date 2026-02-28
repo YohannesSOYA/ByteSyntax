@@ -1,4 +1,3 @@
-import axios from 'react';
 /* I am creating the file first */
 import axiosLib from 'axios';
 

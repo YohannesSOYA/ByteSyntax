@@ -7,7 +7,7 @@ from app.services.parcel_service import ParcelService
 from app.repositories.parcel_repository import ParcelRepository
 from app.services.email_service import EmailService
 from app.models.schemas.request.parcel_request import ParcelPublicLookup
-from app.models.schemas.response.parcel_response import ParcelRead
+from app.models.schemas.response.parcel_response import ParcelRead, PublicStats
 
 router = APIRouter()
 
@@ -31,3 +31,25 @@ def check_parcel_status(
         phone_number=lookup_data.phone_number,
         tracking_suffix=lookup_data.tracking_suffix
     )
+
+@router.get("/stats", response_model=PublicStats)
+def get_public_stats(
+    service: Annotated[ParcelService, Depends(get_parcel_service)],
+) -> Any:
+    """
+    Get public situational awareness stats.
+    """
+    stats = service.parcel_repo.get_stats()
+    return PublicStats(
+        arrived_today=stats["arrived_today"],
+        pending_total=stats["pending"]
+    )
+
+@router.get("/arrivals-today", response_model=List[ParcelRead])
+def get_arrivals_today(
+    service: Annotated[ParcelService, Depends(get_parcel_service)],
+) -> Any:
+    """
+    Get list of parcels arrived today.
+    """
+    return service.parcel_repo.get_arrivals_today()

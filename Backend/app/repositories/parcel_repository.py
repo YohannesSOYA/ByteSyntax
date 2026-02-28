@@ -82,6 +82,16 @@ class ParcelRepository(BaseRepository):
             self.db.refresh(parcel)
         return parcel
 
+    def unmark_as_collected(self, parcel_id: int) -> Parcel | None:
+        parcel = self.get_by_id(parcel_id)
+        if parcel:
+            parcel.status = ParcelStatus.PENDING
+            parcel.collected_at = None
+            parcel.collected_by_name = None
+            self.db.commit()
+            self.db.refresh(parcel)
+        return parcel
+
     def get_stats(self) -> dict:
         today = date.today()
         
@@ -140,3 +150,10 @@ class ParcelRepository(BaseRepository):
         
         results = query.all()
         return [{"date": str(r.date), "count": r.count} for r in results]
+
+    def get_arrivals_today(self) -> list[Parcel]:
+        today = date.today()
+        query = select(Parcel).where(
+            cast(Parcel.arrived_at, Date) == today
+        ).order_by(Parcel.arrived_at.desc())
+        return list(self.db.execute(query).scalars().all())

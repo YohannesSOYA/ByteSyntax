@@ -1,19 +1,25 @@
-import React from 'react';
-import { Navigate, Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { useLocation, Navigate, Link } from 'react-router-dom';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Layout } from '../components/common/Layout';
 import { Button } from '../components/ui/Button';
 import { AnalyticsCards } from '../features/dashboard/components/AnalyticsCards';
 import { ParcelTable } from '../features/dashboard/components/ParcelTable';
+import { SettingsPanel } from '../features/dashboard/components/SettingsPanel';
+import { RegisterParcelModal } from '../features/dashboard/components/RegisterParcelModal';
 import { useAuth } from '../features/dashboard/hooks/useAuth';
 
 export const DashboardPage = () => {
     const { isAuthenticated, user } = useAuth();
+    const { hash } = useLocation();
+    const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
 
     // Auth guard — redirect unauthenticated users
     if (!isAuthenticated) {
         return <Navigate to="/admin" replace />;
     }
+
+    const activeTab = hash === '#parcels' ? 'parcels' : hash === '#settings' ? 'settings' : 'overview';
 
     const now = new Date();
     const greeting =
@@ -45,29 +51,79 @@ export const DashboardPage = () => {
                             transition={{ delay: 0.15 }}
                             className="text-slate-400 font-medium mt-1"
                         >
-                            Here's your operational overview for today.
+                            {activeTab === 'settings' ? 'Manage your administrator profile details.' : "Here's your operational overview for today."}
                         </motion.p>
                     </div>
 
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 0.2 }}
-                    >
-                        <Link to="/admin/scan">
-                            <Button className="h-12 px-8 flex items-center gap-2 shadow-lg shadow-primary/20">
-                                <span className="text-xl">⛶</span>
-                                <span>Scan Entry</span>
+                    {activeTab !== 'settings' && (
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: 0.2 }}
+                            className="flex gap-3"
+                        >
+                            <Button
+                                variant="outline"
+                                onClick={() => setIsRegisterModalOpen(true)}
+                                className="h-12 px-6 flex items-center gap-2 border-slate-200"
+                            >
+                                <span className="text-xl">+</span>
+                                <span>Register</span>
                             </Button>
-                        </Link>
-                    </motion.div>
+                            <Link to="/admin/scan">
+                                <Button className="h-12 px-8 flex items-center gap-2 shadow-lg shadow-primary/20">
+                                    <span className="text-xl">⛶</span>
+                                    <span>Scan Entry</span>
+                                </Button>
+                            </Link>
+                        </motion.div>
+                    )}
                 </div>
 
-                {/* Analytics Stat Tiles */}
-                <AnalyticsCards />
+                <RegisterParcelModal
+                    isOpen={isRegisterModalOpen}
+                    onClose={() => setIsRegisterModalOpen(false)}
+                />
 
-                {/* Parcel Registry Table */}
-                <ParcelTable />
+                <AnimatePresence mode="wait">
+                    {activeTab === 'overview' && (
+                        <motion.div
+                            key="overview"
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            transition={{ duration: 0.3 }}
+                            className="space-y-8"
+                        >
+                            <AnalyticsCards />
+                            <ParcelTable />
+                        </motion.div>
+                    )}
+
+                    {activeTab === 'parcels' && (
+                        <motion.div
+                            key="parcels"
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            transition={{ duration: 0.3 }}
+                        >
+                            <ParcelTable />
+                        </motion.div>
+                    )}
+
+                    {activeTab === 'settings' && (
+                        <motion.div
+                            key="settings"
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            transition={{ duration: 0.3 }}
+                        >
+                            <SettingsPanel />
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </motion.div>
         </Layout>
     );

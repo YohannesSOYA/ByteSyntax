@@ -1,11 +1,14 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import { TrackingPage } from './TrackingPage';
 import { useParcelTracking } from '../features/tracking/hooks/useParcelTracking';
+import { usePublicStats } from '../features/tracking/hooks/usePublicStats';
 import { describe, it, expect, vi, type Mock } from 'vitest';
 import React from 'react';
 
 // Mock the hook
 vi.mock('../features/tracking/hooks/useParcelTracking');
+vi.mock('../features/tracking/hooks/usePublicStats');
 
 // Mock framer-motion to avoid animation issues in tests
 vi.mock('framer-motion', () => {
@@ -41,8 +44,16 @@ describe('TrackingPage', () => {
             mutate: vi.fn(),
             isPending: false
         });
+        (usePublicStats as Mock).mockReturnValue({
+            data: { arrived_today: 5, pending_total: 10 },
+            isLoading: false
+        });
 
-        render(<TrackingPage />);
+        render(
+            <MemoryRouter>
+                <TrackingPage />
+            </MemoryRouter>
+        );
 
         expect(screen.getByText(/byte/i)).toBeInTheDocument();
         expect(screen.getByLabelText(/Recipient Name/i)).toBeInTheDocument();
@@ -67,8 +78,16 @@ describe('TrackingPage', () => {
             mutate: mockMutate,
             isPending: false
         });
+        (usePublicStats as Mock).mockReturnValue({
+            data: { arrived_today: 5, pending_total: 10 },
+            isLoading: false
+        });
 
-        render(<TrackingPage />);
+        render(
+            <MemoryRouter>
+                <TrackingPage />
+            </MemoryRouter>
+        );
 
         // Fill form
         fireEvent.change(screen.getByLabelText(/Recipient Name/i), { target: { value: 'John Doe' } });
@@ -94,8 +113,16 @@ describe('TrackingPage', () => {
             mutate: mockMutate,
             isPending: false
         });
+        (usePublicStats as Mock).mockReturnValue({
+            data: { arrived_today: 5, pending_total: 10 },
+            isLoading: false
+        });
 
-        render(<TrackingPage />);
+        render(
+            <MemoryRouter>
+                <TrackingPage />
+            </MemoryRouter>
+        );
 
         fireEvent.change(screen.getByLabelText(/Recipient Name/i), { target: { value: 'Jane Doe' } });
         fireEvent.change(screen.getByLabelText(/Phone Number/i), { target: { value: '0987654321' } });

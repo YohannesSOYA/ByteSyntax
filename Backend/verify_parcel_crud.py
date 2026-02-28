@@ -25,7 +25,7 @@ def verify_parcel_crud():
     # 1. Login
     try:
         print("1. Logging in as admin...")
-        token = get_admin_token("testadmin", "testpass123")
+        token = get_admin_token("admin", "admin123")
         headers = {
             'Authorization': f'Bearer {token}',
             'Content-Type': 'application/json'

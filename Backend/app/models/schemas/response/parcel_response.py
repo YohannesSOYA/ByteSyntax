@@ -31,3 +31,7 @@ class ParcelPublicRead(BaseModel):
     
     class Config:
         from_attributes = True
+
+class PublicStats(BaseModel):
+    arrived_today: int
+    pending_total: int

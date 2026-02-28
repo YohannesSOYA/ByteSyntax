@@ -114,6 +114,16 @@ class ParcelService:
 
         return self.parcel_repo.mark_as_collected(parcel_id, collected_by_name)
 
+    def uncollect_parcel(self, parcel_id: int) -> Parcel:
+        parcel = self.parcel_repo.get_by_id(parcel_id)
+        if not parcel:
+            raise NotFoundException(f"Parcel with id {parcel_id} not found.")
+        
+        if parcel.status == ParcelStatus.PENDING:
+            return parcel
+
+        return self.parcel_repo.unmark_as_collected(parcel_id)
+
     def get_all_parcels(self, **filters) -> List[Parcel]:
         if 'phone_number' in filters and filters['phone_number']:
             filters['phone_number'] = self.normalize_phone(filters['phone_number'])

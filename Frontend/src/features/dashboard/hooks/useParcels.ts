@@ -18,11 +18,31 @@ export const useParcels = () => {
         },
     });
 
+    const createMutation = useMutation({
+        mutationFn: dashboardApi.createParcel,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['parcels'] });
+            queryClient.invalidateQueries({ queryKey: ['dashboardStats'] });
+        },
+    });
+
+    const uncollectMutation = useMutation({
+        mutationFn: dashboardApi.uncollectParcel,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['parcels'] });
+            queryClient.invalidateQueries({ queryKey: ['dashboardStats'] });
+        },
+    });
+
     return {
         parcels: fetchQuery.data ?? [],
         isLoading: fetchQuery.isLoading,
         isError: fetchQuery.isError,
         collectParcel: collectMutation.mutate,
         isCollecting: collectMutation.isPending,
+        createParcel: createMutation.mutate,
+        isCreating: createMutation.isPending,
+        uncollectParcel: uncollectMutation.mutate,
+        isUncollecting: uncollectMutation.isPending,
     };
 };

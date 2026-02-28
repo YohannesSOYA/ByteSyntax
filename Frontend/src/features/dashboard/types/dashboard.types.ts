@@ -21,6 +21,20 @@ export interface AuthState {
     };
 }
 
+export interface AdminRead {
+    id: number;
+    username: string;
+    full_name: string;
+    is_active: boolean;
+    created_at: string;
+}
+
+export interface AdminUpdate {
+    username?: string;
+    full_name?: string;
+    password?: string;
+}
+
 export interface DashboardStats {
     pending_parcels: number;
     collected_today: number;

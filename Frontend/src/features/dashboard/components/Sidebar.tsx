@@ -1,5 +1,4 @@
-import React from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../hooks/useAuth';
 
@@ -40,6 +39,7 @@ const navItems = [
 export const Sidebar = () => {
     const { logout } = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
 
     const handleLogout = () => {
         logout();
@@ -65,22 +65,29 @@ export const Sidebar = () => {
 
             {/* Navigation */}
             <nav className="flex-1 px-4 py-6 space-y-1">
-                {navItems.map((item) => (
-                    <NavLink
-                        key={item.label}
-                        to={item.path}
-                        className={({ isActive }) =>
-                            `flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium transition-all duration-200
-                            ${isActive && !item.path.includes('#')
-                                ? 'bg-primary text-white shadow-lg shadow-primary/25'
-                                : 'text-slate-500 hover:bg-stone-50 hover:text-slate-800'
-                            }`
-                        }
-                    >
-                        {item.icon}
-                        {item.label}
-                    </NavLink>
-                ))}
+                {navItems.map((item) => {
+                    const isHashItem = item.path.includes('#');
+                    const itemHash = isHashItem ? item.path.substring(item.path.indexOf('#')) : '';
+                    const isItemActive = isHashItem
+                        ? location.hash === itemHash
+                        : location.pathname === item.path && !location.hash;
+
+                    return (
+                        <NavLink
+                            key={item.label}
+                            to={item.path}
+                            className={`flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium transition-all duration-200
+                                ${isItemActive
+                                    ? 'bg-primary text-white shadow-lg shadow-primary/25'
+                                    : 'text-slate-500 hover:bg-stone-50 hover:text-slate-800'
+                                }`
+                            }
+                        >
+                            {item.icon}
+                            {item.label}
+                        </NavLink>
+                    );
+                })}
             </nav>
 
             {/* Logout */}

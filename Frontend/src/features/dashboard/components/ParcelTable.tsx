@@ -9,7 +9,7 @@ import { StatusBadge } from '../../../components/ui/StatusBadge';
 type SortField = 'student_name' | 'arrived_at' | 'status';
 
 export const ParcelTable = () => {
-    const { parcels, isLoading, isError, collectParcel, isCollecting } = useParcels();
+    const { parcels, isLoading, isError, collectParcel, isCollecting, uncollectParcel, isUncollecting } = useParcels();
     const [sortField, setSortField] = useState<SortField>('arrived_at');
     const [sortAsc, setSortAsc] = useState(false);
     const [filterStatus, setFilterStatus] = useState<ParcelStatus | 'all'>('all');
@@ -133,7 +133,7 @@ export const ParcelTable = () => {
                                             {new Date(parcel.arrived_at).toLocaleDateString()}
                                         </td>
                                         <td className="px-6 py-4 text-right">
-                                            {parcel.status === 'Pending' && (
+                                            {parcel.status === 'Pending' ? (
                                                 <Button
                                                     size="sm"
                                                     variant="outline"
@@ -143,6 +143,15 @@ export const ParcelTable = () => {
                                                 >
                                                     Collect
                                                 </Button>
+                                            ) : (
+                                                <button
+                                                    onClick={() => uncollectParcel(parcel.id)}
+                                                    disabled={isUncollecting}
+                                                    className="text-slate-300 hover:text-primary transition-colors p-1"
+                                                    title="Undo Collection"
+                                                >
+                                                    <span className="text-lg">↺</span>
+                                                </button>
                                             )}
                                         </td>
                                     </motion.tr>

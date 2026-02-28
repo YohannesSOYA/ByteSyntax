@@ -63,6 +63,18 @@ def mark_collected(
     """
     return service.mark_collected(id, collected_by_name=current_admin.full_name)
 
+@router.patch("/{id}/uncollect", response_model=ParcelRead)
+def unmark_collected(
+    *,
+    service: Annotated[ParcelService, Depends(get_parcel_service)],
+    current_admin: Annotated[Admin, Depends(deps.get_current_admin)], 
+    id: int,
+) -> Any:
+    """
+    Unmark a parcel as collected (revert to pending).
+    """
+    return service.uncollect_parcel(id)
+
 from app.services.upload_service import UploadService
 
 def get_upload_service() -> UploadService:

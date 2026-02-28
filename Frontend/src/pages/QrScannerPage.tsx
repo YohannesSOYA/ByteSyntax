@@ -15,6 +15,16 @@ export const QrScannerPage = () => {
     const [isSuccess, setIsSuccess] = useState(false);
 
     useEffect(() => {
+        // Check for ID in URL (from scanning with external camera)
+        const params = new URLSearchParams(window.location.search);
+        const urlId = params.get('id');
+        if (urlId) {
+            const idInt = parseInt(urlId);
+            if (!isNaN(idInt)) {
+                handleCollection(idInt);
+            }
+        }
+
         const scanner = new Html5QrcodeScanner(
             "reader",
             {
@@ -26,14 +36,24 @@ export const QrScannerPage = () => {
         );
 
         const onScanSuccess = (decodedText: string) => {
+            // Handle both legacy "bs-parcel:ID" and new "http://.../admin/scan?id=ID"
+            let parcelId: number | null = null;
+
             if (decodedText.startsWith('bs-parcel:')) {
-                const parcelId = parseInt(decodedText.split(':')[1]);
-                if (!isNaN(parcelId)) {
-                    scanner.clear();
-                    handleCollection(parcelId);
-                } else {
-                    setError("Invalid QR Code payload.");
+                parcelId = parseInt(decodedText.split(':')[1]);
+            } else if (decodedText.includes('?id=')) {
+                try {
+                    const url = new URL(decodedText);
+                    const idParam = url.searchParams.get('id');
+                    if (idParam) parcelId = parseInt(idParam);
+                } catch (e) {
+                    // Not a valid URL, ignore
                 }
+            }
+
+            if (parcelId && !isNaN(parcelId)) {
+                scanner.clear().catch(console.error);
+                handleCollection(parcelId);
             } else {
                 setError("This is not a valid ByteSyntax parcel QR code.");
             }
