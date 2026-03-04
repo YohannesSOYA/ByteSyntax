@@ -10,6 +10,7 @@ class Settings(BaseSettings):
     # CORS Origins: Strict list of trusted frontends
     BACKEND_CORS_ORIGINS: list[str] = [
         "http://localhost:5173",  # Vite Dev Server
+        "http://10.243.4.80:5173", # Network Access
         "http://localhost:3000",  # React Default
         "http://localhost:8000",  # Backend / Docs
     ]

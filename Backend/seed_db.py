@@ -12,7 +12,8 @@ from app.models.database.python.enums import ParcelStatus
 def seed_data():
     db = SessionLocal()
     try:
-        # Check if we already have data
+        from app.core.config import settings
+        print(f"DEBUG: Using DATABASE_URL: {settings.DATABASE_URL}")
         count = db.query(Parcel).count()
         if count > 0:
             print(f"Database already has {count} parcels. Skipping seeding to avoid duplicates.")
@@ -100,7 +101,9 @@ def seed_data():
         print(f"Successfully seeded {len(sample_parcels)} parcels!")
         
     except Exception as e:
+        import traceback
         print(f"Error seeding database: {e}")
+        traceback.print_exc()
         db.rollback()
     finally:
         db.close()
