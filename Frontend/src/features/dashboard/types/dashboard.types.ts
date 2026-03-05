@@ -1,4 +1,4 @@
-export type ParcelStatus = 'Pending' | 'Collected';
+export type ParcelStatus = 'pending' | 'collected';
 
 export interface ParcelRead {
     id: number;

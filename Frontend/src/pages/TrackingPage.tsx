@@ -162,33 +162,33 @@ export const TrackingPage = () => {
                                     >
                                         {resultStatus === 'found' ? (
                                             parcels.map((parcel) => (
-                                                <Card key={parcel.id} glass className={`border text-center p-8 ${parcel.status === 'Pending'
+                                                <Card key={parcel.id} glass className={`border text-center p-8 ${parcel.status === 'pending'
                                                     ? 'bg-emerald-50/50 border-emerald-200'
                                                     : 'bg-slate-100/50 border-slate-200'
                                                     }`}>
                                                     <div className="flex flex-col items-center gap-4">
-                                                        <div className={`h-16 w-16 rounded-full flex items-center justify-center text-white text-3xl shadow-lg ${parcel.status === 'Pending' ? 'bg-emerald-500 shadow-emerald-200' : 'bg-slate-400 shadow-slate-200'
+                                                        <div className={`h-16 w-16 rounded-full flex items-center justify-center text-white text-3xl shadow-lg ${parcel.status === 'pending' ? 'bg-emerald-500 shadow-emerald-200' : 'bg-slate-400 shadow-slate-200'
                                                             }`}>
                                                             ✓
                                                         </div>
                                                         <div>
-                                                            <h3 className={`text-2xl font-bold font-serif ${parcel.status === 'Pending' ? 'text-emerald-900' : 'text-slate-700'
+                                                            <h3 className={`text-2xl font-bold font-serif ${parcel.status === 'pending' ? 'text-emerald-900' : 'text-slate-700'
                                                                 }`}>
-                                                                {parcel.status === 'Pending' ? 'Consignment Ready' : 'Already Collected'}
+                                                                {parcel.status === 'pending' ? 'Consignment Ready' : 'Already Collected'}
                                                             </h3>
-                                                            <p className={`font-medium ${parcel.status === 'Pending' ? 'text-emerald-700' : 'text-slate-500'
+                                                            <p className={`font-medium ${parcel.status === 'pending' ? 'text-emerald-700' : 'text-slate-500'
                                                                 }`}>
-                                                                {parcel.status === 'Pending'
+                                                                {parcel.status === 'pending'
                                                                     ? 'Your parcel is processed and awaiting collection.'
                                                                     : `Collected on ${new Date(parcel.collected_at!).toLocaleDateString()}`}
                                                             </p>
                                                         </div>
-                                                        <div className={`text-xs font-mono bg-white/50 px-3 py-1 rounded-full border mt-2 ${parcel.status === 'Pending' ? 'text-emerald-600 border-emerald-100' : 'text-slate-500 border-slate-200'
+                                                        <div className={`text-xs font-mono bg-white/50 px-3 py-1 rounded-full border mt-2 ${parcel.status === 'pending' ? 'text-emerald-600 border-emerald-100' : 'text-slate-500 border-slate-200'
                                                             }`}>
                                                             LOC: {parcel.notes || '-'} | REF: {parcel.tracking_number}
                                                         </div>
 
-                                                        {parcel.status === 'Pending' && (
+                                                        {parcel.status === 'pending' && (
                                                             <motion.div
                                                                 initial={{ opacity: 0, scale: 0.8 }}
                                                                 animate={{ opacity: 1, scale: 1 }}

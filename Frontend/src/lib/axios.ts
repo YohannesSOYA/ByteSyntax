@@ -2,7 +2,7 @@
 import axiosLib from 'axios';
 
 // Replace the URL depending on deployment/local testing
-const BASE_URL = 'http://10.243.4.80:8000/api/v1';
+const BASE_URL = 'http://localhost:8000/api/v1';
 
 export const apiClient = axiosLib.create({
     baseURL: BASE_URL,
