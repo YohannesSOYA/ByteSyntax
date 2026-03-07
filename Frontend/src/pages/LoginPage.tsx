@@ -34,8 +34,8 @@ export const LoginPage = () => {
             >
                 {/* Branding above form */}
                 <div className="text-center">
-                    <h1 className="text-4xl font-bold text-slate-900 font-serif lowercase tracking-tighter">
-                        byte<span className="text-primary italic">syntax</span>
+                    <h1 className="text-4xl font-bold text-slate-900 font-serif tracking-tighter">
+                        Byte<span className="text-primary italic">Syntax</span>
                     </h1>
                     <p className="text-slate-400 text-sm font-medium mt-1 uppercase tracking-widest">
                         Administrative Portal

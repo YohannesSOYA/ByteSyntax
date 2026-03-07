@@ -8,13 +8,23 @@ import { dashboardApi } from '../api/dashboardApi';
 export const SettingsPanel = () => {
     const { user } = useAuth();
     const [fullName, setFullName] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isUpdating, setIsUpdating] = useState(false);
     const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
 
     useEffect(() => {
-        if (user?.name) setFullName(user.name);
-    }, [user]);
+        const fetchProfile = async () => {
+            try {
+                const profile = await dashboardApi.getProfile();
+                setFullName(profile.full_name || '');
+                setEmail(profile.email || '');
+            } catch (err) {
+                console.error("Failed to fetch profile", err);
+            }
+        };
+        fetchProfile();
+    }, []);
 
     const handleUpdate = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -23,6 +33,7 @@ export const SettingsPanel = () => {
         try {
             await dashboardApi.updateProfile({
                 full_name: fullName,
+                email: email || undefined,
                 password: password || undefined
             });
             setMessage({ type: 'success', text: 'Profile updated successfully!' });
@@ -61,6 +72,16 @@ export const SettingsPanel = () => {
                                 type="text"
                                 value={fullName}
                                 onChange={e => setFullName(e.target.value)}
+                                className="w-full px-4 py-2 rounded-xl bg-slate-50 border border-slate-100 focus:border-primary outline-none transition-all text-sm"
+                            />
+                        </div>
+                        <div className="space-y-1">
+                            <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Email Address</label>
+                            <input
+                                type="email"
+                                value={email}
+                                placeholder="For password recovery"
+                                onChange={e => setEmail(e.target.value)}
                                 className="w-full px-4 py-2 rounded-xl bg-slate-50 border border-slate-100 focus:border-primary outline-none transition-all text-sm"
                             />
                         </div>

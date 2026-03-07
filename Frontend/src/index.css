@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @theme {
   /* Logistic Flow Palette */
@@ -10,8 +11,8 @@
   --color-alert: #E11D48;
 
   /* Typography */
-  --font-serif: "Playfair Display", serif;
-  --font-sans: "Lato", sans-serif;
+  --font-serif: "Outfit", sans-serif;
+  --font-sans: "Inter", sans-serif;
   --font-mono: "JetBrains Mono", monospace;
 }
 

@@ -65,8 +65,8 @@ export const Sidebar = () => {
         >
             {/* Brand */}
             <div className="px-6 pt-8 pb-6 border-b border-slate-100">
-                <h1 className="text-2xl font-bold text-slate-900 font-serif lowercase tracking-tighter">
-                    byte<span className="text-primary italic">syntax</span>
+                <h1 className="text-2xl font-bold text-slate-900 font-serif tracking-tighter">
+                    Byte<span className="text-primary italic">Syntax</span>
                 </h1>
                 <p className="text-xs text-slate-400 font-medium mt-0.5 uppercase tracking-widest">
                     Control Centre

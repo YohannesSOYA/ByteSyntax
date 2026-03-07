@@ -2,8 +2,11 @@
 CREATE TABLE admins (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
+    email VARCHAR(100) UNIQUE NULL, -- For password resets
     password_hash VARCHAR(255) NOT NULL,
     full_name VARCHAR(100),
+    reset_token VARCHAR(100) NULL,
+    reset_token_expires DATETIME NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

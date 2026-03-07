@@ -7,6 +7,7 @@ from app.api import deps
 from app.services.auth_service import AuthService
 from app.services.admin_service import AdminService
 from app.models.schemas.response.auth_response import Token
+from app.models.schemas.request.auth_request import ForgotPasswordRequest, ResetPasswordRequest
 from app.core.exceptions import AuthException
 
 router = APIRouter()
@@ -48,3 +49,25 @@ def login_access_token(
         "access_token": access_token,
         "token_type": "bearer",
     }
+
+@router.post("/forgot-password")
+async def forgot_password(
+    request: ForgotPasswordRequest,
+    admin_service: Annotated[AdminService, Depends(deps.get_admin_service)]
+) -> Any:
+    """
+    Initiate password reset flow
+    """
+    await admin_service.forgot_password(request.email)
+    return {"message": "If the email is registered, a reset link will be sent shortly."}
+
+@router.post("/reset-password")
+def reset_password(
+    request: ResetPasswordRequest,
+    admin_service: Annotated[AdminService, Depends(deps.get_admin_service)]
+) -> Any:
+    """
+    Reset password using token
+    """
+    admin_service.reset_password(request.token, request.new_password)
+    return {"message": "Password successfully reset."}

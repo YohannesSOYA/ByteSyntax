@@ -76,6 +76,16 @@ export const LoginForm = () => {
                     >
                         Authenticate
                     </Button>
+
+                    <div className="text-center mt-4">
+                        <button
+                            type="button"
+                            onClick={() => navigate('/forgot-password')}
+                            className="text-sm font-medium text-slate-400 hover:text-primary transition-colors"
+                        >
+                            Forgot Password?
+                        </button>
+                    </div>
                 </form>
 
                 {/* Subtle lock icon */}

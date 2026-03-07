@@ -18,12 +18,14 @@ export interface AuthState {
     token?: string;
     user?: {
         name: string;
+        email?: string;
     };
 }
 
 export interface AdminRead {
     id: number;
     username: string;
+    email: string | null;
     full_name: string;
     is_active: boolean;
     created_at: string;
@@ -31,6 +33,7 @@ export interface AdminRead {
 
 export interface AdminUpdate {
     username?: string;
+    email?: string;
     full_name?: string;
     password?: string;
 }

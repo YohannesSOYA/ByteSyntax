@@ -5,6 +5,7 @@ from datetime import datetime
 class AdminRead(BaseModel):
     id: int
     username: str
+    email: Optional[str] = None
     full_name: Optional[str] = None
     created_at: datetime
 
