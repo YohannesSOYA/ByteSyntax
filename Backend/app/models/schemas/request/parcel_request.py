@@ -25,3 +25,7 @@ class ParcelPublicLookup(BaseModel):
     student_name: str
     phone_number: str
     tracking_suffix: str = Field(..., min_length=4, max_length=4, description="Last 4 digits of tracking number")
+
+class ParcelCheckAll(BaseModel):
+    student_name: str
+    phone_number: str

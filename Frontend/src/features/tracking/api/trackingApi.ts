@@ -27,4 +27,9 @@ export const trackingApi = {
         const { data } = await apiClient.get<ParcelRead[]>('/public/arrivals-today');
         return data;
     },
+
+    checkAllParcels: async (payload: { student_name: string; phone_number: string }): Promise<ParcelRead[]> => {
+        const { data } = await apiClient.post<ParcelRead[]>('/public/check-all', payload);
+        return data;
+    },
 };

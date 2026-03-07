@@ -1,9 +1,16 @@
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from '../components/ui/Button';
 import { LoginForm } from '../features/dashboard/components/LoginForm';
+import { useAuth } from '../features/dashboard/hooks/useAuth';
 
 export const LoginPage = () => {
+    const { isAuthenticated } = useAuth();
+
+    if (isAuthenticated) {
+        return <Navigate to="/admin/dashboard" replace />;
+    }
+
     return (
         <div className="min-h-screen bg-stone-50 flex flex-col items-center justify-center p-6 relative overflow-hidden">
             {/* Return to Public Tracker */}

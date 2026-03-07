@@ -103,6 +103,14 @@ class ParcelService:
         )
         return [self._attach_whatsapp_link(p) for p in parcels]
 
+    def public_lookup_all(self, student_name: str, phone_number: str) -> List[Parcel]:
+        normalized_phone = self.normalize_phone(phone_number)
+        parcels = self.parcel_repo.get_all(
+            student_name=student_name,
+            phone_number=normalized_phone
+        )
+        return [self._attach_whatsapp_link(p) for p in parcels]
+
     def mark_collected(self, parcel_id: int, collected_by_name: Optional[str] = None) -> Parcel:
         parcel = self.parcel_repo.get_by_id(parcel_id)
         if not parcel:

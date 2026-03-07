@@ -5,6 +5,7 @@ import { Input } from '../components/ui/Input';
 import { Card } from '../components/ui/Card';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useParcelTracking } from '../features/tracking/hooks/useParcelTracking';
+import { useParcelCheckAll } from '../features/tracking/hooks/useParcelCheckAll';
 import { usePublicStats } from '../features/tracking/hooks/usePublicStats';
 import { QRCodeCanvas } from 'qrcode.react';
 import type { ParcelRead } from '../features/dashboard/types/dashboard.types';
@@ -12,7 +13,8 @@ import type { ParcelRead } from '../features/dashboard/types/dashboard.types';
 import { ArrivalsSlider } from '../features/tracking/components/ArrivalsSlider';
 
 export const TrackingPage = () => {
-    const { mutate: searchParcel, isPending } = useParcelTracking();
+    const { mutate: searchParcel, isPending: isSearchingOne } = useParcelTracking();
+    const { mutate: searchAllParcels, isPending: isSearchingAll } = useParcelCheckAll();
     const { data: stats } = usePublicStats();
 
     const [studentName, setStudentName] = useState('');
@@ -47,7 +49,32 @@ export const TrackingPage = () => {
         );
     };
 
+    const handleSearchAll = () => {
+        searchAllParcels(
+            {
+                student_name: studentName,
+                phone_number: phone,
+            },
+            {
+                onSuccess: (data) => {
+                    if (data && data.length > 0) {
+                        setParcels(data);
+                        setResultStatus('found');
+                    } else {
+                        setParcels([]);
+                        setResultStatus('not_found');
+                    }
+                },
+                onError: () => {
+                    setParcels([]);
+                    setResultStatus('not_found');
+                }
+            }
+        );
+    };
+
     const isFormValid = studentName.trim().length > 0 && phone.trim().length >= 4 && suffix.trim().length === 4;
+    const isAllFormValid = studentName.trim().length > 0 && phone.trim().length >= 4;
 
     return (
         <div className="min-h-screen bg-stone-50 flex flex-col items-center justify-center p-6 md:p-12 relative overflow-x-hidden">
@@ -119,14 +146,29 @@ export const TrackingPage = () => {
                                     </div>
                                 </div>
 
-                                <Button
-                                    className="w-full h-14 text-lg"
-                                    onClick={handleSearch}
-                                    isLoading={isPending}
-                                    disabled={!isFormValid}
-                                >
-                                    Initialize Retrieval
-                                </Button>
+                                <div className="space-y-3">
+                                    <Button
+                                        className="w-full h-14 text-lg"
+                                        onClick={handleSearch}
+                                        isLoading={isSearchingOne}
+                                        disabled={!isFormValid || isSearchingAll}
+                                    >
+                                        Initialize Retrieval
+                                    </Button>
+
+                                    <Button
+                                        variant="outline"
+                                        className="w-full h-12 text-slate-600 border-slate-200 hover:bg-slate-50"
+                                        onClick={handleSearchAll}
+                                        isLoading={isSearchingAll}
+                                        disabled={!isAllFormValid || isSearchingOne}
+                                    >
+                                        Check all my parcels
+                                    </Button>
+                                    <p className="text-[10px] text-center text-slate-400 font-medium uppercase tracking-widest">
+                                        No suffix required for "Check all"
+                                    </p>
+                                </div>
 
                                 {/* Today's Arrivals Summary Box (compact) */}
                                 {stats && (
