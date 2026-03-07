@@ -17,7 +17,9 @@ These are essential for the system to function as described in the `project_idea
 - **Dashboard Statistics**: Real-time counters for:
     - 📦 Parcels Arrived Today
     - ⏳ Pending Collections
-    - ✅ Collected Today
+- **Secure Authentication**: JWT implementation complete! ✅
+- **Account Recovery**: Token-based Password Reset flow implemented! ✅
+- **Dashboard Statistics**: Real-time counters for Pending, Collected, and Arrived Today. ✅
 - **Pagination & Filtering**:
     - Server-side pagination for parcel lists (crucial as data grows).
     - Filters: "Show only Pending", "Search by Student Name".
@@ -35,8 +37,8 @@ These features significantly improve user experience and operational efficiency.
 
 ### 4. Automated Notifications 🔔
 - **Email/SMS Alerts**:
-    - Trigger an email to the student immediately when a parcel is scanned in.
-    - *Tech Stack*: `fastapi-mail` or external providers (Twilio/SendGrid).
+    - **Status**: Foundation Ready! ✅ (Integrated `fastapi-mail`).
+    - Currently used for Password Reset. Next phase: Automatic arrival alerts.
 - **Reminders**: Automated jobs (cron) to email students who haven't collected parcels in > 3 days.
 
 ### 5. QR Code Integration 📱

@@ -4,9 +4,10 @@
 - **Framework**: FastAPI
 - **ASGI Server**: Uvicorn
 - **Database**: 
+  - Engine: **MySQL (XAMPP)**
   - ORM: SQLAlchemy
   - Migration: Alembic
-  - Engine: PostgreSQL (Recommended) or SQLite
 - **Validation**: Pydantic v2
 - **Authentication**: OAuth2 with JWT (Jose)
-- **Environment**: Pydantic-settings
+- **Email Service**: FastAPI-Mail (SMTP with Gmail)
+- **Environment**: python-dotenv & pydantic-settings
