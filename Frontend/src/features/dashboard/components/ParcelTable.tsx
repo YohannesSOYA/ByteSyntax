@@ -54,7 +54,7 @@ export const ParcelTable = () => {
                 </div>
                 {/* Status Filter */}
                 <div className="flex items-center gap-2">
-                    {(['all', 'pending', 'collected'] as const).map(s => (
+                    {(['all', 'Pending', 'Collected'] as const).map(s => (
                         <button
                             key={s}
                             onClick={() => setFilterStatus(s)}
@@ -64,7 +64,7 @@ export const ParcelTable = () => {
                                     : 'bg-stone-50 text-slate-500 border-slate-200 hover:border-slate-300'
                                 }`}
                         >
-                            {s === 'pending' ? 'Ready' : s}
+                            {s === 'Pending' ? 'Ready' : s}
                         </button>
                     ))}
                 </div>
@@ -133,7 +133,7 @@ export const ParcelTable = () => {
                                             {new Date(parcel.arrived_at).toLocaleDateString()}
                                         </td>
                                         <td className="px-6 py-4 text-right">
-                                            {parcel.status === 'pending' ? (
+                                            {parcel.status === 'Pending' ? (
                                                 <Button
                                                     size="sm"
                                                     variant="outline"

@@ -10,7 +10,7 @@ export const LoginForm = () => {
     const { login } = useAuth();
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
-    const [pin, setPin] = useState('');
+    const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [hasError, setHasError] = useState(false);
 
@@ -19,13 +19,13 @@ export const LoginForm = () => {
         setIsLoading(true);
         setHasError(false);
 
-        const success = await login(username, pin);
+        const success = await login(username, password);
         setIsLoading(false);
         if (success) {
             navigate('/admin/dashboard');
         } else {
             setHasError(true);
-            setPin('');
+            setPassword('');
         }
     };
 
@@ -58,24 +58,21 @@ export const LoginForm = () => {
                         error={hasError ? 'Authentication failed.' : undefined}
                     />
                     <Input
-                        label="Administrator PIN"
+                        label="Administrator Password"
                         type="password"
-                        placeholder="Enter 4-digit PIN"
-                        value={pin}
+                        placeholder="Enter password"
+                        value={password}
                         onChange={(e) => {
-                            setPin(e.target.value);
+                            setPassword(e.target.value);
                             setHasError(false);
                         }}
-                        maxLength={4}
-                        inputMode="numeric"
-                        pattern="[0-9]*"
                     />
 
                     <Button
                         type="submit"
                         className="w-full h-12 text-base mt-2"
                         isLoading={isLoading}
-                        disabled={pin.length < 4 || username.length === 0}
+                        disabled={password.length === 0 || username.length === 0}
                     >
                         Authenticate
                     </Button>

@@ -1,5 +1,0 @@
-User: admin | Hash: $2b$12$IjoBZQeDEv0aBa6WC38Y6eI1pHZGEp8UYiYVU95nI3hv1v6NxU5Oa
-User: Aidil | Hash: $2b$12$hJ3PRmHnlyN2Hq11F/wuE.DNMp4vluO4Azvs011xp6gvPK1CcJ/ha
-User: syafiq | Hash: $2b$12$OrwgEJ4JjMy0InRql/Q8ceuKQxNiOzVUzaazH2HoHDIAoczniZNjK
-User: Allyne | Hash: $2b$12$9nsplCswcBdr/QHlt4J/4ew/u7x4lopGZ61ZkfqYIKt9Cjt9Ag96G
-User: Yohannes | Hash: $2b$12$9buKtSqSZo6iPAPBGgJgMOCdHmq63I/WqUdtNGYmbXISuSYR3LxZ6
