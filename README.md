@@ -2,7 +2,7 @@
 
 A modern, full-stack parcel management and tracking system designed for student centers and administration offices.
 
-## 🚀 Quick Start Guide
+## 🚀 Quick Start Guide...
 
 ### 1. Prerequisites
 - **Python 3.10+**
