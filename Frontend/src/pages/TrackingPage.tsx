@@ -95,9 +95,9 @@ export const TrackingPage = () => {
             `}</style>
 
             {/* Admin Portal Entry */}
-            <div className="absolute top-6 right-6 z-20">
-                <Link to="/admin">
-                    <Button variant="outline" size="sm" className="bg-white/50 backdrop-blur-sm border-slate-200 text-slate-500 hover:text-primary">
+            <div className="md:absolute static mb-8 md:mb-0 top-6 right-6 z-20 w-full md:w-auto flex justify-end">
+                <Link to="/admin" className="w-full md:w-auto">
+                    <Button variant="outline" size="sm" className="w-full md:w-auto bg-white/50 backdrop-blur-sm border-slate-200 text-slate-500 hover:text-primary">
                         Admin Portal Access
                     </Button>
                 </Link>
@@ -129,20 +129,24 @@ export const TrackingPage = () => {
                                         value={studentName}
                                         onChange={(e) => setStudentName(e.target.value)}
                                     />
-                                    <div className="flex gap-4">
-                                        <Input
-                                            label="Phone Number"
-                                            placeholder="E.g. 0123456789"
-                                            value={phone}
-                                            onChange={(e) => setPhone(e.target.value)}
-                                        />
-                                        <Input
-                                            label="Tracking Suffix"
-                                            placeholder="Last 4 chars"
-                                            value={suffix}
-                                            onChange={(e) => setSuffix(e.target.value)}
-                                            maxLength={4}
-                                        />
+                                    <div className="flex flex-col sm:flex-row gap-4">
+                                        <div className="flex-1">
+                                            <Input
+                                                label="Phone Number"
+                                                placeholder="E.g. 0123456789"
+                                                value={phone}
+                                                onChange={(e) => setPhone(e.target.value)}
+                                            />
+                                        </div>
+                                        <div className="w-full sm:w-32">
+                                            <Input
+                                                label="Tracking Suffix"
+                                                placeholder="Last 4 chars"
+                                                value={suffix}
+                                                onChange={(e) => setSuffix(e.target.value)}
+                                                maxLength={4}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
 

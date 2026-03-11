@@ -14,9 +14,9 @@ export const LoginPage = () => {
     return (
         <div className="min-h-screen bg-stone-50 flex flex-col items-center justify-center p-6 relative overflow-hidden">
             {/* Return to Public Tracker */}
-            <div className="absolute top-6 left-6 z-20">
-                <Link to="/">
-                    <Button variant="outline" size="sm" className="bg-white/50 backdrop-blur-sm border-slate-200 text-slate-500 hover:text-primary">
+            <div className="md:absolute static mb-12 md:mb-0 top-6 left-6 z-20 w-full md:w-auto flex justify-start">
+                <Link to="/" className="w-full md:w-auto">
+                    <Button variant="outline" size="sm" className="w-full md:w-auto bg-white/50 backdrop-blur-sm border-slate-200 text-slate-500 hover:text-primary">
                         ← Back to Tracking
                     </Button>
                 </Link>
