@@ -29,10 +29,13 @@ A modern, full-stack parcel management and tracking system designed for student 
    Create a `.env` file based on the existing template and add your:
    - `DATABASE_URL` (MySQL)
    - `MAIL_USERNAME` & `MAIL_PASSWORD` (Gmail App Password)
-5. **Start Server:**
+6. **Mobile/Network Access (Optional):**
+   If you want to access the app from your phone on the same Wi-Fi:
    ```bash
-   uvicorn main:app --reload
+   # Run from Backend directory
+   python -m uvicorn main:app --reload --host 0.0.0.0
    ```
+   *Note: On your phone's browser, use `http://<YOUR_IP>:5173`.*
 
 ---
 
@@ -49,6 +52,11 @@ A modern, full-stack parcel management and tracking system designed for student 
    ```bash
    npm run dev
    ```
+   *For Mobile/Network access:*
+   ```bash
+   npm run dev -- --host
+   ```
+   *(Note: Use `npm.cmd` if PowerShell blocks the run script)*
 
 ---
 
