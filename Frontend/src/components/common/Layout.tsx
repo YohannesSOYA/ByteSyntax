@@ -12,7 +12,7 @@ export const Layout = ({ children }: LayoutProps) => {
                 <Sidebar />
             </div>
             {/* Main Content — offset by sidebar width on desktop */}
-            <main className="flex-1 p-4 md:p-8 overflow-y-auto">
+            <main className="flex-1 md:ml-64 p-4 md:p-8 overflow-y-auto">
                 {children}
             </main>
         </div>
