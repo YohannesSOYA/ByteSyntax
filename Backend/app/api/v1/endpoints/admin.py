@@ -63,6 +63,7 @@ def update_current_admin(
     return service.update_admin_profile(
         admin_id=current_admin.id,
         username=admin_in.username,
+        email=admin_in.email,
         full_name=admin_in.full_name,
         password=admin_in.password
     )

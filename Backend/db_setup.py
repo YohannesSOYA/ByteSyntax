@@ -34,11 +34,11 @@ def setup_database():
         Base.metadata.create_all(bind=engine)
         print("All tables initialized successfully.")
         
-        print("\n✅ Database setup complete!")
+        print("\n[SUCCESS] Database setup complete!")
         print("You can now run 'python seed_db.py' to add sample data.")
 
     except Exception as e:
-        print(f"\n❌ Error during database setup: {e}")
+        print(f"\n[ERROR] Error during database setup: {e}")
         if "Can't connect to MySQL server" in str(e):
             print("\nTIP: Is XAMPP MySQL started?")
         sys.exit(1)

@@ -5,6 +5,8 @@ import { TrackingPage } from './pages/TrackingPage';
 import { LoginPage } from './pages/LoginPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { QrScannerPage } from './pages/QrScannerPage';
+import { ForgotPasswordPage } from './pages/ForgotPasswordPage';
+import { ResetPasswordPage } from './pages/ResetPasswordPage';
 
 function App() {
     return (
@@ -14,8 +16,10 @@ function App() {
                     {/* Public: Parcel Tracking */}
                     <Route path="/" element={<TrackingPage />} />
 
-                    {/* Admin: Login */}
+                    {/* Admin: Auth */}
                     <Route path="/admin" element={<LoginPage />} />
+                    <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+                    <Route path="/reset-password" element={<ResetPasswordPage />} />
 
                     {/* Admin: Dashboard (auth-guarded inside DashboardPage) */}
                     <Route path="/admin/dashboard" element={<DashboardPage />} />

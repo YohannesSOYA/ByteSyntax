@@ -17,9 +17,9 @@ const getInitialState = (): AuthState => {
 export const useAuth = () => {
     const [authState, setAuthState] = useState<AuthState>(getInitialState);
 
-    const login = useCallback(async (username: string, pin: string): Promise<boolean> => {
+    const login = useCallback(async (username: string, password: string): Promise<boolean> => {
         try {
-            const tokenResponse = await dashboardApi.login(username, pin);
+            const tokenResponse = await dashboardApi.login(username, password);
 
             const newState: AuthState = {
                 isAuthenticated: true,

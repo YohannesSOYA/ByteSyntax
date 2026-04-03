@@ -19,6 +19,27 @@ Base URL: `http://localhost:8000/api/v1`
     }
     ```
 
+### Forgot Password
+- **URL**: `/auth/forgot-password`
+- **Method**: `POST`
+- **Description**: Request a password reset link to be sent to the admin's email.
+- **Request Body**:
+    ```json
+    { "email": "string" }
+    ```
+
+### Reset Password
+- **URL**: `/auth/reset-password`
+- **Method**: `POST`
+- **Description**: Reset password using a valid token.
+- **Request Body**:
+    ```json
+    {
+      "token": "string",
+      "new_password": "string"
+    }
+    ```
+
 ---
 
 ## 🌐 Public Endpoints

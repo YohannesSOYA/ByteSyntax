@@ -38,8 +38,23 @@ export const dashboardApi = {
         return data;
     },
 
+    getProfile: async (): Promise<AdminRead> => {
+        const { data } = await apiClient.get<AdminRead>('/admin/profile');
+        return data;
+    },
+
     uncollectParcel: async (id: number): Promise<ParcelRead> => {
         const { data } = await apiClient.patch<ParcelRead>(`/parcels/${id}/uncollect`);
+        return data;
+    },
+
+    forgotPassword: async (email: string): Promise<{ message: string }> => {
+        const { data } = await apiClient.post('/auth/forgot-password', { email });
+        return data;
+    },
+
+    resetPassword: async (token: string, new_password: string): Promise<{ message: string }> => {
+        const { data } = await apiClient.post('/auth/reset-password', { token, new_password });
         return data;
     },
 };

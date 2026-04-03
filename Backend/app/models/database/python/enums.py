@@ -1,5 +1,5 @@
 import enum
 
 class ParcelStatus(enum.Enum):
-    PENDING = "pending"
-    COLLECTED = "collected"
+    PENDING = "Pending"
+    COLLECTED = "Collected"

@@ -1,5 +1,0 @@
-﻿Error seeding database: (pymysql.err.OperationalError) (1054, "Unknown column 'parcels.email' in 'field list'")
-[SQL: SELECT count(*) AS count_1 
-FROM (SELECT parcels.id AS parcels_id, parcels.student_name AS parcels_student_name, parcels.phone_number AS parcels_phone_number, parcels.tracking_number AS parcels_tracking_number, parcels.email AS parcels_email, parcels.courier_name AS parcels_courier_name, parcels.arrived_at AS parcels_arrived_at, parcels.status AS parcels_status, parcels.collected_at AS parcels_collected_at, parcels.collected_by_name AS parcels_collected_by_name, parcels.storage_location AS parcels_storage_location, parcels.arrival_photo_url AS parcels_arrival_photo_url, parcels.notes AS parcels_notes, parcels.created_at AS parcels_created_at, parcels.updated_at AS parcels_updated_at 
-FROM parcels) AS anon_1]
-(Background on this error at: https://sqlalche.me/e/20/e3q8)

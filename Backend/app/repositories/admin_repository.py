@@ -11,6 +11,14 @@ class AdminRepository(BaseRepository):
         query = select(Admin).where(Admin.username == username)
         return self.db.execute(query).scalar_one_or_none()
 
+    def get_by_email(self, email: str) -> Admin | None:
+        query = select(Admin).where(Admin.email == email)
+        return self.db.execute(query).scalar_one_or_none()
+
+    def get_by_reset_token(self, token: str) -> Admin | None:
+        query = select(Admin).where(Admin.reset_token == token)
+        return self.db.execute(query).scalar_one_or_none()
+
     def create(self, username: str, password_hash: str, full_name: str | None = None) -> Admin:
         admin = Admin(
             username=username,
